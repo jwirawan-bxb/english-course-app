@@ -14,17 +14,11 @@
     font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
   }
   *{box-sizing:border-box;}
-  body{margin:0;background:#dcdce2;padding:24px;color:var(--ink);}
+  body{margin:0;background:#fff;color:var(--ink);}
 
-  .browser{max-width:980px;margin:0 auto;border-radius:10px;overflow:hidden;box-shadow:0 12px 40px rgba(0,0,0,.25);background:#fff;}
-  .chrome-bar{background:#e9e9ee;padding:8px 12px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #d3d3da;}
-  .chrome-dots{display:flex;gap:6px;}
-  .chrome-dots span{width:11px;height:11px;border-radius:50%;display:inline-block;}
-  .cd1{background:#ff5f57;} .cd2{background:#febc2e;} .cd3{background:#28c840;}
-  .addr{flex:1;background:#fff;border:1px solid #d3d3da;border-radius:14px;padding:5px 12px;font-size:12px;color:#6a6a72;font-family:monospace;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
-  .sound-toggle{border:1px solid #d3d3da;background:#fff;border-radius:14px;width:30px;height:30px;font-size:14px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center;}
+  .sound-toggle{position:fixed;top:14px;right:14px;z-index:100;border:1px solid var(--line);background:#fff;border-radius:50%;width:34px;height:34px;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.1);}
   .sound-toggle:hover{border-color:var(--pink);}
-  .stage{position:relative;min-height:560px;background:#fff;}
+  .stage{position:relative;min-height:100vh;max-width:980px;margin:0 auto;background:#fff;}
 
   .app-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--line);}
   .app-nav .back{color:var(--pink);font-weight:700;text-decoration:none;font-size:13px;letter-spacing:.03em;cursor:pointer;}
@@ -217,7 +211,66 @@
   .carousel-choice-btn.picked-correct{background:var(--teal-correct);color:var(--green-correct-text);border-color:var(--teal-correct);font-weight:700;}
   .carousel-choice-btn.dim{color:#bbb;cursor:default;}
   .carousel-next-hint{font-size:11px;opacity:.85;margin-top:8px;}
+
+  .mp-badge{background:#d7f3ee;color:#0f6b5c;}
+  .match-cols{display:flex;gap:24px;max-width:640px;margin:20px auto 0;}
+  .match-col{flex:1;display:flex;flex-direction:column;gap:10px;}
+  .match-cell{border:1px solid var(--line);border-radius:6px;padding:11px 14px;font-size:12.5px;color:#333;cursor:pointer;background:#fff;text-align:center;transition:.15s;}
+  .match-cell:hover:not(.matched){border-color:#2FBFA0;}
+  .match-cell.selected{background:#2FBFA0;color:#fff;border-color:#2FBFA0;font-weight:700;}
+  .match-cell.matched{background:#d7f3ee;color:#0f6b5c;border-color:#a9e3d6;cursor:default;font-weight:600;}
+  .match-tip{max-width:400px;margin:16px auto 0;background:#fdecc8;color:#7a5a00;border-radius:6px;padding:10px 14px;font-size:12px;line-height:1.5;text-align:center;}
+
+  .lc-wrap{padding:50px 20px;display:flex;justify-content:center;}
+  .lc-card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:34px 40px;max-width:420px;width:100%;text-align:center;box-shadow:0 6px 24px rgba(0,0,0,.08);}
+  .lc-icon{font-size:36px;margin-bottom:8px;}
+  .lc-title{color:var(--pink);font-weight:800;font-size:16px;letter-spacing:.02em;margin-bottom:14px;}
+  .lc-label{font-size:10px;letter-spacing:.1em;color:var(--gray);font-weight:700;}
+  .lc-divider{width:36px;height:1px;background:var(--line);margin:8px auto 14px;}
+  .lc-terms{color:var(--pink);font-size:12.5px;line-height:1.9;margin-bottom:20px;}
+  .lc-feedback-row{display:flex;align-items:center;justify-content:center;gap:10px;font-size:11.5px;color:var(--gray);margin-bottom:6px;}
+  .lc-thumb{cursor:pointer;font-size:15px;opacity:.55;transition:.15s;}
+  .lc-thumb:hover, .lc-thumb.active{opacity:1;transform:scale(1.15);}
+  .lc-tags{margin:12px 0 18px;}
+  .lc-tags-label{font-size:11px;color:var(--gray);display:block;margin-bottom:8px;}
+  .lc-tag-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+  .lc-tag{border:1px solid var(--pink);color:var(--pink);background:#fff;border-radius:14px;padding:5px 12px;font-size:11px;cursor:pointer;}
+  .lc-tag.active{background:var(--pink);color:#fff;}
+  .lc-next-btn{width:100%;margin-top:16px;padding:12px 16px;line-height:1.4;}
+  .lc-next-btn small{font-size:9px;letter-spacing:.08em;opacity:.85;}
+
+  .cert-toolbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(--line);background:#fff;}
+  .cert-toolbar-title{font-weight:800;color:var(--pink);font-size:14px;}
+  .cert-controls{max-width:520px;margin:22px auto 0;text-align:center;padding:0 20px;}
+  .cert-name-label{display:block;font-size:11.5px;color:var(--gray);font-weight:600;margin-bottom:6px;}
+  .cert-controls input{width:100%;border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:14px;text-align:center;margin-bottom:12px;}
+  .cert-controls input:focus{border-color:var(--pink);outline:none;}
+  .cert-download-btn{padding:12px 28px;font-size:13px;}
+  .cert-hint{font-size:11px;color:var(--gray);margin-top:10px;line-height:1.5;}
+  .cert-page{display:flex;justify-content:center;padding:40px 20px 60px;}
+  .cert-border{position:relative;width:100%;max-width:760px;aspect-ratio:1.414/1;background:#fffdf7;border:3px solid var(--pink);outline:1px solid var(--pink);outline-offset:-10px;padding:50px 60px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.12);font-family:Georgia,'Times New Roman',serif;}
+  .cert-ribbon{font-size:38px;margin-bottom:6px;}
+  .cert-kicker{font-size:13px;letter-spacing:.25em;color:var(--pink-dark);font-weight:700;margin-bottom:18px;}
+  .cert-presented{font-size:13px;color:#555;font-style:italic;margin:6px 0;}
+  .cert-name{font-size:32px;color:var(--ink);font-weight:700;margin:8px 0 10px;border-bottom:1.5px solid var(--pink);padding-bottom:10px;display:inline-block;min-width:60%;}
+  .cert-course-title{font-size:19px;color:var(--pink);font-weight:800;margin:10px 0 8px;}
+  .cert-meta{font-size:12px;color:#777;letter-spacing:.03em;margin-bottom:24px;}
+  .cert-footer{display:flex;justify-content:space-between;width:100%;max-width:480px;margin-top:20px;}
+  .cert-sig-block, .cert-date-block{text-align:center;}
+  .cert-sig-line{font-size:14px;font-weight:700;color:var(--ink);border-top:1px solid #999;padding-top:6px;min-width:150px;}
+  .cert-sig-label{font-size:10px;color:var(--gray);letter-spacing:.05em;margin-top:2px;}
+
+  @media print{
+    html, body{ background:#fff !important; margin:0; padding:0; }
+    body *{ visibility:hidden; }
+    .cert-page, .cert-page *{ visibility:visible; }
+    .cert-page{ position:absolute; top:0; left:0; width:100%; padding:24px; margin:0; display:flex; justify-content:center; background:#fff; }
+    .cert-border{ box-shadow:none; max-width:100%; }
+    .no-print{ display:none !important; }
+  }
   .mastery-banner{max-width:600px;margin:0 auto 20px;background:#fdf3d9;border:1px solid #f0d896;color:#7a5a00;font-size:12px;font-weight:700;text-align:center;padding:10px 14px;border-radius:6px;}
+  .cert-banner{background:linear-gradient(90deg,#fdf3d9,#fdeef2);border-bottom:1px solid var(--line);padding:12px 28px;text-align:center;font-size:13px;font-weight:700;color:#7a5a00;}
+  .cert-banner-btn{margin-left:10px;background:var(--pink);color:#fff;border:none;border-radius:14px;padding:6px 14px;font-size:12px;font-weight:700;cursor:pointer;}
 
   .pron-entry-row{text-align:center;margin-top:22px;}
   .pron-entry-btn{background:#fff;border:1px solid var(--tooltip-blue);color:var(--tooltip-blue);font-weight:700;font-size:12.5px;padding:10px 20px;border-radius:20px;cursor:pointer;}
@@ -282,8 +335,6 @@
   /* ============ MOBILE-FIRST RESPONSIVE ============ */
   @media (max-width: 720px){
     body{padding:0;background:#fff;}
-    .browser{max-width:100%;border-radius:0;box-shadow:none;}
-    .chrome-bar{display:none;}
     .app-nav{padding:12px 14px;flex-wrap:wrap;gap:8px;}
     .app-nav .links{gap:12px;font-size:11.5px;order:3;width:100%;overflow-x:auto;padding-top:6px;border-top:1px solid var(--line);}
     .stats-bar{padding:8px 14px;gap:8px;}
@@ -318,14 +369,8 @@
 </head>
 <body>
 
-<div class="browser">
-  <div class="chrome-bar">
-    <div class="chrome-dots"><span class="cd1"></span><span class="cd2"></span><span class="cd3"></span></div>
-    <div class="addr" id="addrbar">app.flightschool.edu/course/english-communication-grammar-mastery/9a41b7cd...</div>
-    <button class="sound-toggle" id="soundToggleBtn" onclick="toggleSound()" title="Toggle click sounds">🔊</button>
-  </div>
-  <div class="stage" id="stage"></div>
-</div>
+<button class="sound-toggle" id="soundToggleBtn" onclick="toggleSound()" title="Toggle click sounds">🔊</button>
+<div class="stage" id="stage"></div>
 
 <script>
 /* ============ LESSON SUMMARY PDFs (base64, embedded for a fully self-contained file) ============ */
@@ -357,6 +402,7 @@ const LESSONS = [
     "Recognize general respectful titles such as Sir, Ma'am, and Madam.",
     "Identify common interjections and the emotions or reactions they express."
   ],
+  keyTerms: ["Mr. / Mrs. / Miss / Ms.", "Sir / Ma'am / Madam", "Interjections", "Titles", "Formal Address"],
   screens: [
     {type:"content", title:"Addressing People Using Titles", body:`
       <ul>
@@ -398,6 +444,14 @@ const LESSONS = [
         {text:"Sir", correctIndex:0, feedback:"\"Sir\" is a general title used when you don't know someone's name."},
         {text:"Oops!", correctIndex:1, feedback:"\"Oops\" is an interjection — it expresses realizing a small mistake, on its own with no grammar rule attached."}
       ]},
+    {type:"matchPairs", prompt:"Match each title or interjection with its meaning.",
+      tip:"Re-read the definitions above — each title or interjection has exactly one matching meaning.",
+      pairs:[
+        {left:"Mr.", right:"Used for any man, regardless of marital status"},
+        {left:"Uh-huh", right:"An informal way of saying \"Yes\""},
+        {left:"Oops!", right:"Realizing you've made a small mistake"},
+        {left:"Sir", right:"Used when you don't know a man's name"}
+      ]},
     {type:"fillBlank",
       prompt:`This title is used for a woman who is not married or for a young girl — and can also politely get someone's attention: <span class="blank-tag BLANK">&nbsp;</span>.`,
       options:["Miss","Mrs."], correctIndex:0,
@@ -426,6 +480,7 @@ const LESSONS = [
     "Use personal pronouns correctly across subject, object, possessive, and reflexive forms.",
     "Distinguish letters, words, phrases, idioms, sentences, and clauses."
   ],
+  keyTerms: ["Verb Forms (V1-V4)", "Personal Pronouns", "Phrase", "Idiom", "Clause"],
   screens: [
     {type:"content", title:"Verb Forms", body:`
       <p>Every verb can take five forms, and knowing their names makes every later grammar topic easier to talk about.</p>
@@ -477,6 +532,14 @@ const LESSONS = [
         {text:"because she was late", correctIndex:2, feedback:"\"Because she was late\" is a clause — it has a subject (\"she\") and a verb (\"was\")."},
         {text:"an old car", correctIndex:0, feedback:"\"An old car\" is a phrase — descriptive words with no subject-verb pair."}
       ]},
+    {type:"matchPairs", prompt:"Match each auxiliary/pronoun-related term with its definition.",
+      tip:"Re-read the definitions above — each term maps to exactly one description.",
+      pairs:[
+        {left:"Base (V1)", right:"The dictionary form of a verb, like \"eat\""},
+        {left:"Past Participle (V3)", right:"Used with have/had, like \"eaten\""},
+        {left:"Possessive Pronoun", right:"Stands alone, like \"mine\""},
+        {left:"Reflexive Pronoun", right:"Refers back to the subject, like \"myself\""}
+      ]},
     {type:"fillBlank",
       prompt:`A combination of words that has a meaning of its own, different from the meanings of each individual word — like "to learn by heart": <span class="blank-tag BLANK">&nbsp;</span>.`,
       options:["an idiom","a phrase"], correctIndex:0,
@@ -505,6 +568,7 @@ const LESSONS = [
     "Use \"to be,\" \"to do,\" and \"to have\" as auxiliaries to build different sentence types.",
     "Choose the correct modal auxiliary to express ability, obligation, possibility, or advice."
   ],
+  keyTerms: ["Sentence Patterns", "to be / to do / to have", "Modals", "Auxiliary Verbs"],
   screens: [
     {type:"content", title:"Sentence Patterns", body:`
       <p>Every English sentence you build falls into one of four patterns:</p>
@@ -564,6 +628,14 @@ const LESSONS = [
         {text:"She has finished her work.", correctIndex:2, feedback:"\"Has\" (to have) + past participle (\"finished\") builds the Present Perfect."},
         {text:"They are building a new house.", correctIndex:0, feedback:"\"Are\" (to be) + V-ing builds the continuous tense again here."}
       ]},
+    {type:"matchPairs", prompt:"Match each modal with what it expresses.",
+      tip:"Compare each modal's strength — some are firm requirements, others are just possibilities or suggestions.",
+      pairs:[
+        {left:"must", right:"Obligation or necessity"},
+        {left:"might", right:"Slight possibility"},
+        {left:"can", right:"Ability or permission"},
+        {left:"should", right:"Advice"}
+      ]},
     {type:"fillBlank",
       prompt:`"Do you have a job?" places the auxiliary before the subject to build a <span class="blank-tag BLANK">&nbsp;</span>.`,
       options:["question sentence","negative sentence"], correctIndex:0,
@@ -592,6 +664,7 @@ const LESSONS = [
     "Form negative and question sentences using do/does.",
     "Use the Simple Present to express habits, facts, and permanent situations."
   ],
+  keyTerms: ["Simple Present Formula", "do / does", "Habitual Action", "General Truth"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b></p>
@@ -640,6 +713,14 @@ const LESSONS = [
         {text:"She lives in Jakarta.", correctIndex:2, feedback:"A long-term fact about her life — a permanent situation."},
         {text:"He usually takes the bus.", correctIndex:0, feedback:"\"Usually\" signals a repeated routine — a habitual action."}
       ]},
+    {type:"matchPairs", prompt:"Match each Simple Present example with the use it demonstrates.",
+      tip:"Look at the time context of each sentence — is it a routine, a permanent fact, or an unchanging truth?",
+      pairs:[
+        {left:"I go to the gym every day.", right:"Habitual action"},
+        {left:"The sun rises in the East.", right:"General truth"},
+        {left:"He works at a bank.", right:"Permanent situation"},
+        {left:"I like coffee.", right:"Stative verb / state, not action"}
+      ]},
     {type:"fillBlank",
       prompt:`He <span class="blank-tag BLANK">&nbsp;</span> rice every day.`,
       options:["eats","eat"], correctIndex:0,
@@ -668,6 +749,7 @@ const LESSONS = [
     "Form negative and question sentences using to be + not, and to be + subject.",
     "Use the Present Continuous for actions happening now, temporary situations, and future plans."
   ],
+  keyTerms: ["Present Continuous Formula", "Happening Now", "Temporary Situation", "Future Plan"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b> Subject + to be (am/is/are) + V-ing (present participle)</p>
@@ -703,6 +785,14 @@ const LESSONS = [
         {text:"We are visiting my parents next weekend.", correctIndex:2, feedback:"\"Next weekend\" signals a scheduled future arrangement."},
         {text:"They are watching a movie at the moment.", correctIndex:0, feedback:"\"At the moment\" signals an action happening right now."}
       ]},
+    {type:"matchPairs", prompt:"Match each Present Continuous use with an example.",
+      tip:"Check the time clue in each sentence — is it right now, temporary, or scheduled ahead?",
+      pairs:[
+        {left:"Happening now", right:"\"Look! It's raining.\""},
+        {left:"Temporary situation", right:"\"I'm working from a cafe this month.\""},
+        {left:"Future plan", right:"\"We are flying to Bali next Friday.\""},
+        {left:"Formula", right:"Subject + to be + V-ing"}
+      ]},
     {type:"fillBlank",
       prompt:`She <span class="blank-tag BLANK">&nbsp;</span> dinner right now.`,
       options:["is cooking","cooks"], correctIndex:0,
@@ -731,6 +821,7 @@ const LESSONS = [
     "Use the Simple Present instead of the continuous form with non-progressive verbs.",
     "Identify special verbs (think, have, see) that shift meaning between progressive and non-progressive."
   ],
+  keyTerms: ["Non-Progressive Verbs", "Emotion / Possession / Mental State", "Verbs That Shift Meaning"],
   screens: [
     {type:"content", title:"Formula & Examples", body:`
       <p>For verbs that are typically non-progressive, use the Simple Present structure — <b>Subject + Verb (non-progressive form)</b>:</p>
@@ -775,6 +866,14 @@ const LESSONS = [
         {text:"He believes in hard work.", correctIndex:2, feedback:"\"Believes\" is a mental state — something held in the mind."},
         {text:"They want a vacation.", correctIndex:0, feedback:"\"Want\" is an emotion/desire verb, not an action happening moment to moment."}
       ]},
+    {type:"matchPairs", prompt:"Match each verb with how it's used.",
+      tip:"Think about whether each verb changes meaning depending on context — opinion vs. process, possession vs. experience.",
+      pairs:[
+        {left:"think (opinion)", right:"\"I think you're right.\""},
+        {left:"think (process)", right:"\"I am thinking about the problem.\""},
+        {left:"have (possession)", right:"\"I have a car.\""},
+        {left:"have (experience)", right:"\"I am having a great time.\""}
+      ]},
     {type:"fillBlank",
       prompt:`She <span class="blank-tag BLANK">&nbsp;</span> a bookstore.`,
       options:["owns","is owning"], correctIndex:0,
@@ -803,6 +902,7 @@ const LESSONS = [
     "Recognize common past-time markers such as yesterday, last week, and ... ago.",
     "Form negative and question sentences using did/didn't."
   ],
+  keyTerms: ["Simple Past Formula (V2)", "Time Markers", "did / didn't"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b> Subject + V2 (past form of the verb)</p>
@@ -841,6 +941,14 @@ const LESSONS = [
         {text:"We went to the beach last weekend.", correctIndex:0, feedback:"\"Last weekend\" points to the most recent instance of that period."},
         {text:"I saw him yesterday.", correctIndex:0, feedback:"\"Yesterday\" points to the day before today."}
       ]},
+    {type:"matchPairs", prompt:"Match each affirmative/negative/question form with its example.",
+      tip:"Look at whether the sentence states something, denies it, or asks about it.",
+      pairs:[
+        {left:"Affirmative", right:"\"I visited my grandparents last weekend.\""},
+        {left:"Negative", right:"\"I didn't visit my grandparents last weekend.\""},
+        {left:"Interrogative", right:"\"Did you visit your grandparents last weekend?\""},
+        {left:"Polite request (modal)", right:"\"Could I use your telephone, please?\""}
+      ]},
     {type:"fillBlank",
       prompt:`She <span class="blank-tag BLANK">&nbsp;</span> about the incident last week.`,
       options:["heard","hears"], correctIndex:0,
@@ -869,6 +977,7 @@ const LESSONS = [
     "Use the Past Continuous for actions in progress at a specific past time, interrupted actions, and simultaneous actions.",
     "Form negative and question sentences using was/were + not, and was/were + subject."
   ],
+  keyTerms: ["Past Continuous Formula", "Interrupted Action", "Simultaneous Actions"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <table>
@@ -909,6 +1018,14 @@ const LESSONS = [
         {text:"While he was driving, she was texting.", correctIndex:2, feedback:"Two continuous actions happening at once — simultaneous actions."},
         {text:"They were watching TV at 8 last night.", correctIndex:0, feedback:"A stated moment in the past — in progress at a specific time."}
       ]},
+    {type:"matchPairs", prompt:"Match each Past Continuous form with its example.",
+      tip:"Check whether the sentence states, denies, or asks about an ongoing past action.",
+      pairs:[
+        {left:"Affirmative", right:"\"She was reading a novel on the balcony.\""},
+        {left:"Negative", right:"\"I wasn't eating lunch when you called.\""},
+        {left:"Question", right:"\"Were they playing football in the rain?\""},
+        {left:"Formula", right:"Subject + was/were + V-ing"}
+      ]},
     {type:"fillBlank",
       prompt:`I <span class="blank-tag BLANK">&nbsp;</span> TV when the phone rang.`,
       options:["was watching","watched"], correctIndex:0,
@@ -937,6 +1054,7 @@ const LESSONS = [
     "Use since and for correctly, and recognize just/already/yet and ever/never.",
     "Distinguish the Present Perfect from the Simple Past when talking about today, this week, or this month."
   ],
+  keyTerms: ["Present Perfect Formula (V3)", "since / for", "just / already / yet", "ever / never"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b> Subject + have/has + V3 (past participle)</p>
@@ -981,6 +1099,14 @@ const LESSONS = [
         {text:"Have you ever been to Paris?", correctIndex:2, feedback:"\"Ever\" asks about experience at any point in life."},
         {text:"He has already left the office.", correctIndex:1, feedback:"\"Already\" signals a very recent completed action."}
       ]},
+    {type:"matchPairs", prompt:"Match each Present Perfect time expression with what it signals.",
+      tip:"Think about whether the word points to a starting point, a very recent moment, or a lifetime span.",
+      pairs:[
+        {left:"since", right:"A starting point (\"since 2019\")"},
+        {left:"for", right:"A span of time (\"for five years\")"},
+        {left:"yet", right:"Used in negatives/questions (\"not yet\")"},
+        {left:"never", right:"At no point in life"}
+      ]},
     {type:"fillBlank",
       prompt:`He <span class="blank-tag BLANK">&nbsp;</span> for Bank Indonesia for 20 years.`,
       options:["has worked","worked"], correctIndex:0,
@@ -1009,6 +1135,7 @@ const LESSONS = [
     "Use since and for to describe an action's duration, and recognize lately/recently for repeated actions.",
     "Distinguish actions still continuing from recently-stopped actions with a visible present result."
   ],
+  keyTerms: ["Present Perfect Continuous Formula", "Continuing Duration", "Recent Result", "Repeated Pattern"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b> Subject + have/has + been + V-ing (present participle)</p>
@@ -1044,6 +1171,14 @@ const LESSONS = [
         {text:"They have been calling us a lot lately.", correctIndex:2, feedback:"\"Lately\" signals a temporary pattern happening up to now — a repeated pattern."},
         {text:"He has been working here since 2019.", correctIndex:0, feedback:"\"Since 2019\" marks a starting point for an action still continuing — continuing duration."}
       ]},
+    {type:"matchPairs", prompt:"Match each Present Perfect Continuous example with the use it shows.",
+      tip:"Ask whether the sentence emphasizes an ongoing span, a just-finished effect, or a recent habit.",
+      pairs:[
+        {left:"\"I've been waiting for an hour.\"", right:"Continuing duration"},
+        {left:"\"Her eyes are red because she's been crying.\"", right:"Recent action, visible result"},
+        {left:"\"He's been skipping breakfast lately.\"", right:"Repeated pattern lately"},
+        {left:"Formula", right:"have/has + been + V-ing"}
+      ]},
     {type:"fillBlank",
       prompt:`I <span class="blank-tag BLANK">&nbsp;</span> in Jakarta for 10 years.`,
       options:["have been living","live"], correctIndex:0,
@@ -1072,6 +1207,7 @@ const LESSONS = [
     "Use the Past Perfect to show which of two past actions happened first.",
     "Recognize time words like before, after, and by the time, and use since...until for duration up to a past point."
   ],
+  keyTerms: ["Past Perfect Formula (had + V3)", "Earlier of Two Actions", "before / after / by the time"],
   screens: [
     {type:"content", title:"Grammar Overview", body:`
       <p><b>Formula:</b> Subject + had + V3 (past participle) — the auxiliary <b>had</b> is used for every subject (I, you, we, they, he, she, it).</p>
@@ -1104,6 +1240,14 @@ const LESSONS = [
         {text:"He had lived in Bali for five years before he moved to Jakarta.", correctIndex:1, feedback:"\"For five years\" measures a duration that continued up to a specific past point (moving to Jakarta)."},
         {text:"After they had eaten dinner, they watched a movie.", correctIndex:0, feedback:"Eating dinner happened first (Past Perfect), watching the movie came second (Simple Past)."},
         {text:"By 2015, she had worked there for a decade.", correctIndex:1, feedback:"\"For a decade\" measures a duration continuing up to a specific past point (2015)."}
+      ]},
+    {type:"matchPairs", prompt:"Match each Past Perfect time word with its role.",
+      tip:"Ask whether the word signals sequence (which happened first) or a deadline point in the past.",
+      pairs:[
+        {left:"before", right:"The later action happens before this event"},
+        {left:"after", right:"The earlier action happens before this event"},
+        {left:"by the time", right:"Marks the deadline moment for the earlier action"},
+        {left:"Formula", right:"Subject + had + V3"}
       ]},
     {type:"fillBlank",
       prompt:`As soon as we <span class="blank-tag BLANK">&nbsp;</span> the new chairman, our share prices went up.`,
@@ -1143,7 +1287,8 @@ function saveProgress(){
       streak: state.streak,
       lastVisit: state.lastVisit,
       firstVisit: state.firstVisit,
-      soundOn: state.soundOn
+      soundOn: state.soundOn,
+      certificateName: state.certificateName
     }));
   }catch(e){ /* storage unavailable, fail silently */ }
 }
@@ -1160,6 +1305,7 @@ function initProgressAndStreak(){
     state.lastVisit = saved.lastVisit || null;
     state.firstVisit = saved.firstVisit || todayStr;
     state.soundOn = saved.soundOn !== undefined ? saved.soundOn : true;
+    state.certificateName = saved.certificateName || '';
     if(state.lastVisit !== todayStr){
       const y = new Date(); y.setDate(y.getDate()-1);
       state.streak = (state.lastVisit === y.toDateString()) ? state.streak + 1 : 1;
@@ -1170,6 +1316,7 @@ function initProgressAndStreak(){
     state.lastVisit = todayStr;
     state.firstVisit = todayStr;
     state.soundOn = true;
+    state.certificateName = '';
   }
   saveProgress();
 }
@@ -1309,7 +1456,7 @@ const MILESTONES = [
 ];
 
 const state = { view:"course", lessonIdx:0, screenIdx:0, done:new Set(), answers:{}, supportOpen:false, tutor:{open:false, msgs:{}}, navToast:null, bookmarked:false, showSummaries:false,
-  xp:0, streak:0, lastVisit:null, firstVisit:null, masteryPassed:{}, milestonesPassed:{}, masteryState:{}, milestoneState:{}, wrongAttempts:{}, soundOn:true };
+  xp:0, streak:0, lastVisit:null, firstVisit:null, masteryPassed:{}, milestonesPassed:{}, masteryState:{}, milestoneState:{}, wrongAttempts:{}, soundOn:true, certificateName:'' };
 initProgressAndStreak();
 
 /* ============ CLICK SOUND ============ */
@@ -1717,7 +1864,9 @@ function passMasteryAndFinish(){
   addXp(50);
   state.quiz = null;
   saveProgress();
-  renderCourse();
+  state.lessonCompleteFeedback = null;
+  state.feedbackTags = new Set();
+  renderLessonCompleteScreen();
 }
 function startMasteryQuiz(){
   const li = state.lessonIdx;
@@ -1744,7 +1893,11 @@ function passMilestoneAndFinish(){
   addXp(m && m.isFinal ? 250 : 100);
   state.quiz = null;
   saveProgress();
-  renderCourse();
+  if(m && m.isFinal){
+    renderCertificateScreen();
+  } else {
+    renderCourse();
+  }
 }
 function exitMilestone(){
   state.quiz = null;
@@ -2262,7 +2415,7 @@ function supportModalHtml(){
   </div>`;
 }
 
-function setAddr(p){ document.getElementById('addrbar').textContent = p; }
+function setAddr(p){ /* no-op: fake browser address bar removed */ }
 function stageEl(){ return document.getElementById('stage'); }
 
 /* ============ COURSE PAGE ============ */
@@ -2331,6 +2484,10 @@ function renderCourse(){
       <div class="avatar">J</div>
     </div>
     ${statsBarHtml()}
+    ${state.milestonesPassed && state.milestonesPassed['final'] ? `
+    <div class="cert-banner">
+      🎓 You've completed the course! <button class="cert-banner-btn" onclick="renderCertificateScreen()">View / Download Certificate</button>
+    </div>` : ''}
     <div class="course-wrap">
       <div class="course-main">
         <div class="course-icon"></div>
@@ -2419,7 +2576,9 @@ function nextScreen(){
     }
     state.done.add(state.lessonIdx);
     saveProgress();
-    renderCourse();
+    state.lessonCompleteFeedback = null;
+    state.feedbackTags = new Set();
+    renderLessonCompleteScreen();
     return;
   }
   renderLessonScreen();
@@ -2476,6 +2635,7 @@ function renderLessonScreen(){
   else if(screen.type === "explain"){ renderExplainScreen(screen); }
   else if(screen.type === "quickCheck"){ renderQuickCheckScreen(screen); }
   else if(screen.type === "carouselClassify"){ renderCarouselClassifyScreen(screen); }
+  else if(screen.type === "matchPairs"){ renderMatchPairsScreen(screen); }
 }
 
 function renderContentScreen(screen){
@@ -2948,6 +3108,188 @@ function renderCarouselClassifyScreen(screen){
     </div>
     ${supportModalHtml()}`;
   finalizeScreenHtml(inner);
+}
+
+/* ============ MATCH PAIRS (click-to-match, teal themed) ============ */
+let matchPairsState = { forKey:null, rightOrder:[], selectedLeft:null, matched:[], wrongFlash:null };
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+function ensureMatchPairsState(screen, k){
+  if(matchPairsState.forKey !== k){
+    matchPairsState = {
+      forKey:k,
+      rightOrder: shuffleArray(screen.pairs.map(p=>p.right)),
+      selectedLeft: null,
+      matched: [],
+      wrongFlash: null
+    };
+  }
+}
+function clickMatchLeft(leftIdx){
+  if(matchPairsState.matched.includes(leftIdx)) return;
+  matchPairsState.selectedLeft = (matchPairsState.selectedLeft === leftIdx) ? null : leftIdx;
+  matchPairsState.wrongFlash = null;
+  renderLessonScreen();
+}
+function clickMatchRight(rightIdx){
+  const screen = LESSONS[state.lessonIdx].screens[state.screenIdx];
+  const rightText = matchPairsState.rightOrder[rightIdx];
+  if(matchPairsState.selectedLeft === null) return;
+  if(matchPairsState.matched.some(li=>screen.pairs[li].right===rightText)) return;
+  const li = matchPairsState.selectedLeft;
+  if(screen.pairs[li].right === rightText){
+    matchPairsState.matched.push(li);
+    matchPairsState.selectedLeft = null;
+    matchPairsState.wrongFlash = null;
+    addXp(5);
+    const allDone = matchPairsState.matched.length === screen.pairs.length;
+    if(allDone){ state.answers[key()] = true; }
+  } else {
+    matchPairsState.wrongFlash = screen.tip || "Not quite — take another look and try again.";
+    matchPairsState.selectedLeft = null;
+  }
+  renderLessonScreen();
+}
+function renderMatchPairsScreen(screen){
+  const k = key();
+  ensureMatchPairsState(screen, k);
+  const allDone = matchPairsState.matched.length === screen.pairs.length;
+  const inner = `
+    ${playerHeader()}
+    <div class="player-body">
+      ${navBackHtml()}
+      <div class="support-tab" onclick="toggleSupport()">Support</div>
+      <div class="quickcheck-badge mp-badge">🔗 MATCH EACH PROMPT WITH AN ANSWER</div>
+      <div class="qtext" style="margin-top:10px;">${screen.prompt}</div>
+      <div class="match-cols">
+        <div class="match-col">
+          ${screen.pairs.map((p,i)=>{
+            const isMatched = matchPairsState.matched.includes(i);
+            const isSelected = matchPairsState.selectedLeft === i;
+            return `<div class="match-cell ${isMatched?'matched':''} ${isSelected?'selected':''}" onclick="clickMatchLeft(${i})">${p.left}</div>`;
+          }).join('')}
+        </div>
+        <div class="match-col">
+          ${matchPairsState.rightOrder.map((rt,ri)=>{
+            const isMatched = matchPairsState.matched.some(li=>screen.pairs[li].right===rt);
+            return `<div class="match-cell ${isMatched?'matched':''}" onclick="clickMatchRight(${ri})">${rt}</div>`;
+          }).join('')}
+        </div>
+      </div>
+      ${matchPairsState.wrongFlash ? `<div class="match-tip">${matchPairsState.wrongFlash}</div>` : ''}
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      ${allDone ? `<div class="continue-row"><button class="btn-green" onclick="nextScreen()">CONTINUE</button></div>` : ''}
+    </div>
+    ${supportModalHtml()}`;
+  finalizeScreenHtml(inner);
+}
+
+/* ============ LESSON COMPLETE SCREEN ============ */
+function goToNextLessonOrCourse(){
+  const next = state.lessonIdx + 1;
+  if(next < LESSONS.length){ startLesson(next); }
+  else { renderCourse(); }
+}
+function giveLessonFeedback(thumb){
+  state.lessonCompleteFeedback = thumb;
+  renderLessonCompleteScreen();
+}
+function toggleFeedbackTag(tag){
+  if(!state.feedbackTags) state.feedbackTags = new Set();
+  if(state.feedbackTags.has(tag)) state.feedbackTags.delete(tag);
+  else state.feedbackTags.add(tag);
+  renderLessonCompleteScreen();
+}
+function renderLessonCompleteScreen(){
+  const l = LESSONS[state.lessonIdx];
+  const hasNext = state.lessonIdx + 1 < LESSONS.length;
+  const nextTitle = hasNext ? LESSONS[state.lessonIdx+1].title : null;
+  const tags = ["Fun","Fast","Challenging","Useful","Easy"];
+  stageEl().innerHTML = `
+    <div class="player-header" style="background:var(--pink);">
+      <span class="exit-link" onclick="renderCourse()">← EXIT</span>
+      <div class="progress-wrap"><div class="progress-caption">LESSON COMPLETE</div></div>
+      <div class="header-right"><div>${l.title}</div><div class="lesson-of">Lesson ${state.lessonIdx+1} of ${LESSONS.length}</div></div>
+    </div>
+    <div class="lc-wrap">
+      <div class="lc-card">
+        <div class="lc-icon">🎉</div>
+        <div class="lc-title">${l.title}</div>
+        <div class="lc-label">KEY TERMS</div>
+        <div class="lc-divider"></div>
+        <div class="lc-terms">${(l.keyTerms||[]).map(t=>`<div>${t}</div>`).join('')}</div>
+        <div class="lc-feedback-row">
+          <span>Give feedback on this lesson</span>
+          <span class="lc-thumb ${state.lessonCompleteFeedback==='up'?'active':''}" onclick="giveLessonFeedback('up')">👍</span>
+          <span class="lc-thumb ${state.lessonCompleteFeedback==='down'?'active':''}" onclick="giveLessonFeedback('down')">👎</span>
+        </div>
+        ${state.lessonCompleteFeedback ? `
+          <div class="lc-tags">
+            <span class="lc-tags-label">Thanks! Why the thumbs ${state.lessonCompleteFeedback}?</span>
+            <div class="lc-tag-row">
+              ${tags.map(t=>`<button class="lc-tag ${state.feedbackTags && state.feedbackTags.has(t)?'active':''}" onclick="toggleFeedbackTag('${t}')">${t}</button>`).join('')}
+            </div>
+          </div>` : ''}
+        <button class="btn-green lc-next-btn" onclick="goToNextLessonOrCourse()">
+          ${hasNext ? `<small>NEXT LESSON:</small><br>${nextTitle} →` : `BACK TO COURSE →`}
+        </button>
+      </div>
+    </div>`;
+}
+
+/* ============ CERTIFICATE OF COMPLETION ============ */
+function updateCertName(val){
+  state.certificateName = val;
+  saveProgress();
+  const printEl = document.getElementById('certNamePrint');
+  if(printEl) printEl.textContent = val.trim() || 'Course Graduate';
+}
+function downloadCertificatePdf(){
+  const input = document.getElementById('certNameInput');
+  if(input) updateCertName(input.value);
+  window.print();
+}
+function renderCertificateScreen(){
+  const dateStr = new Date().toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+  const nameVal = state.certificateName || '';
+  stageEl().innerHTML = `
+    <div class="cert-toolbar no-print">
+      <span class="exit-link" onclick="renderCourse()">← BACK TO COURSE</span>
+      <span class="cert-toolbar-title">🎓 Certificate of Completion</span>
+    </div>
+    <div class="cert-controls no-print">
+      <label class="cert-name-label">Your name (for the certificate):</label>
+      <input id="certNameInput" type="text" placeholder="Enter your full name" value="${nameVal.replace(/"/g,'&quot;')}" oninput="updateCertName(this.value)" />
+      <button class="btn-green cert-download-btn" onclick="downloadCertificatePdf()">⬇ Download as PDF</button>
+      <div class="cert-hint">This opens your browser's print dialog — choose <b>"Save as PDF"</b> as the destination (instead of a physical printer) to download it.</div>
+    </div>
+    <div class="cert-page">
+      <div class="cert-border">
+        <div class="cert-ribbon">🏅</div>
+        <div class="cert-kicker">CERTIFICATE OF COMPLETION</div>
+        <div class="cert-presented">This certifies that</div>
+        <div class="cert-name" id="certNamePrint">${nameVal.trim() || 'Course Graduate'}</div>
+        <div class="cert-presented">has successfully completed the course</div>
+        <div class="cert-course-title">English Communication &amp; Grammar Mastery</div>
+        <div class="cert-meta">11 Lessons · 4 Milestone Exams · Final Exam Passed</div>
+        <div class="cert-footer">
+          <div class="cert-sig-block">
+            <div class="cert-sig-line">AI Tutor</div>
+            <div class="cert-sig-label">Course Instructor</div>
+          </div>
+          <div class="cert-date-block">
+            <div class="cert-sig-line">${dateStr}</div>
+            <div class="cert-sig-label">Date Completed</div>
+          </div>
+        </div>
+      </div>
+    </div>`;
 }
 
 renderCourse();
