@@ -1767,7 +1767,7 @@ function tutorPanelHtml(){
     <div class="tutor-panel-head"><span>🤖 AI Tutor</span><span class="tp-close" onclick="toggleAiTutor()">✕</span></div>
     <div class="tutor-panel-body">
       <div class="tutor-disclaimer">Have a question? Chat with AI Tutor for help with coursework or extra practice. Note that conversation history may be used to improve future bot interactions.</div>
-      ${msgs.map(m=>`<div class="tutor-msg ${m.role}">${m.text}</div>`).join('')}
+      ${msgs.map(m=>`<div class="tutor-msg ${m.role}">${m.role==='user' ? escapeHtml(m.text) : m.text}</div>`).join('')}
       ${isFirstTurn ? `
       <div class="tutor-quick">
         <button onclick="sendTutorMessage('How do I answer this?')">How do I answer this?</button>
@@ -2197,6 +2197,17 @@ function playModelThenRecording(){
 }
 function playRawRecording(){
   if(pronunState.rawUrl){ new Audio(pronunState.rawUrl).play().catch(()=>{}); }
+}
+
+/* --- security: escape user-typed text before inserting into innerHTML, to
+   prevent XSS via the AI Tutor chat input or the certificate name field --- */
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 /* --- scoring: LCS word alignment between target phrase and what was heard/typed --- */
@@ -3274,7 +3285,7 @@ function renderCertificateScreen(){
         <div class="cert-ribbon">🏅</div>
         <div class="cert-kicker">CERTIFICATE OF COMPLETION</div>
         <div class="cert-presented">This certifies that</div>
-        <div class="cert-name" id="certNamePrint">${nameVal.trim() || 'Course Graduate'}</div>
+        <div class="cert-name" id="certNamePrint">${escapeHtml(nameVal.trim()) || 'Course Graduate'}</div>
         <div class="cert-presented">has successfully completed the course</div>
         <div class="cert-course-title">English Communication &amp; Grammar Mastery</div>
         <div class="cert-meta">11 Lessons · 4 Milestone Exams · Final Exam Passed</div>
