@@ -3114,8 +3114,9 @@ function renderCarouselClassifyScreen(screen){
       <div class="tutor-callout green">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
         ${c.feedback}
-        ${allDone ? `<button class="btn-green" onclick="nextScreen()">CONTINUE</button>` : `<div class="carousel-next-hint">Use ‹ › to go to the next card.</div>`}
+        ${!allDone ? `<div class="carousel-next-hint">Use ‹ › to go to the next card.</div>` : ''}
       </div>` : ''}
+      ${answered!==null && allDone ? `<button class="btn-green" style="margin-top:14px;" onclick="nextScreen()">CONTINUE</button>` : ''}
     </div>
     ${supportModalHtml()}`;
   finalizeScreenHtml(inner);
