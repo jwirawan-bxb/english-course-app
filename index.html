@@ -189,6 +189,7 @@
   .qr-score{font-size:34px;font-weight:800;color:var(--ink);}
   .qr-score.pass{color:var(--green-dark);}
   .qr-score.fail{color:var(--pink-dark);}
+  .qr-pct{font-size:12.5px;color:#777;margin-top:2px;margin-bottom:6px;}
   .qr-verdict{font-size:15px;font-weight:700;margin:4px 0 20px;color:#333;}
   .qr-detail{text-align:left;margin-bottom:22px;}
   .qr-row{border-radius:6px;padding:12px 14px;margin-bottom:8px;font-size:12.5px;line-height:1.5;}
@@ -391,7 +392,7 @@ const LESSON_PDFS = [
 /* ============ LESSON DATA ============ */
 const LESSONS = [
 {
-  eyebrow: "LESSON 1", title: "ENGLISH COMMUNICATION GUIDE",
+    eyebrow: "LESSON 1", title: "ENGLISH COMMUNICATION GUIDE",
   summaryPoints: [
     "Use titles like Mr., Mrs., Miss, and Ms. correctly based on context",
     "Recognize general respectful titles such as Sir, Ma'am, and Madam",
@@ -406,65 +407,76 @@ const LESSONS = [
   screens: [
     {type:"content", title:"Addressing People Using Titles", body:`
       <ul>
-        <li><b>Mr.</b> — used for any man, regardless of marital status, followed by his surname or full name.<br><span class="ex">"Good morning, Mr. Smith. Your 9 AM appointment is ready."</span></li>
-        <li><b>Mrs.</b> — traditionally used for a married woman, followed by her husband's surname. Some women prefer "Ms." regardless of marital status.<br><span class="ex">"Could you please forward this mail to Mrs. Davis?"</span></li>
-        <li><b>Miss</b> — used for a woman who is not married, or for a young girl. Can also be used to politely get someone's attention.<br><span class="ex">"The next person on the list is Miss Garcia." / "Excuse me, Miss? I think you dropped your wallet."</span></li>
-        <li><b>Ms.</b> — the most versatile and widely accepted title for any woman, regardless of marital status. Standard in professional contexts.<br><span class="ex">"Dear Ms. Rodriguez, I am writing to follow up on my application."</span></li>
+        <li><b>Mr.</b> — used for any man, regardless of marital status.<br><span class="ex">"Good morning, Mr. Smith."</span></li>
+        <li><b>Mrs.</b> — traditionally used for a married woman.<br><span class="ex">"Could you please forward this to Mrs. Davis?"</span></li>
+        <li><b>Miss</b> — used for an unmarried woman or young girl.<br><span class="ex">"Excuse me, Miss? I think you dropped your wallet."</span></li>
+        <li><b>Ms.</b> — the versatile choice for any woman, regardless of marital status.<br><span class="ex">"Dear Ms. Rodriguez, I am writing..."</span></li>
       </ul>`},
-    {type:"quickCheck", q:"Which title would you use in a formal email to a woman whose marital status you don't know?",
+    {type:"quickCheck", q:"You're writing a formal email to a woman whose marital status you don't know. Which title do you use?",
       options:["Ms.","Miss","Mrs."], correctIndex:0,
-      feedback:"Ms. is the safe, versatile choice when marital status is unknown or irrelevant."},
+      feedback:"Ms. is the safe, modern choice when marital status is unknown or irrelevant."},
+    {type:"quickCheck", q:"You're speaking to a man at a conference but don't know his name. Which title do you use?",
+      options:["Excuse me, Sir","Excuse me, Mr.","Excuse me, Mister"], correctIndex:0,
+      feedback:"Sir is used when you don't know someone's name. You'd only use Mr. if you knew his last name (e.g., 'Mr. Johnson')."},
     {type:"content", title:"General & Formal Titles", body:`
       <ul>
-        <li><b>Sir / Ma'am</b> — used when you don't know the person's name. Signs of politeness and respect.<br><span class="ex">"Excuse me, sir, could you tell me what time it is?" / "Thank you, ma'am, I appreciate your help."</span></li>
-        <li><b>Madam / Mr. or Madam President</b> — used in very formal situations, often in writing or when addressing a high-ranking person.<br><span class="ex">"Dear Madam," (letter, name unknown) / "Madam Chairwoman, I would like to begin my presentation."</span></li>
+        <li><b>Sir / Ma'am</b> — used when you don't know the person's name. Quick, respectful way to address anyone.<br><span class="ex">"Excuse me, sir, what time is it?" / "Thank you, ma'am."</span></li>
+        <li><b>Madam</b> — very formal, usually in writing or official situations.<br><span class="ex">"Dear Madam," (formal letter, name unknown)</span></li>
       </ul>`},
+    {type:"quickCheck", q:"In a very formal letter to someone whose name and gender you don't know, which greeting do you use?",
+      options:["Dear Madam or Sir","Dear Sir or Madam","Dear Ms. or Mr."], correctIndex:1,
+      feedback:"'Dear Sir or Madam' is the standard formal greeting when addressing an unknown recipient. 'Madam' alone is quite rare in modern English."},
     {type:"content", title:"Sounds in Speaking (Interjections)", body:`
-      <p>Interjections are short sounds we use to express an emotion or thought instantly — common in informal, spoken English.</p>
+      <p>Interjections are short sounds we use to express emotion instantly — heard in informal, spoken English.</p>
       <ul>
-        <li><b>Oh</b> — surprise or sadness. <span class="ex">"Oh! I didn't realize you were standing behind me."</span></li>
-        <li><b>Ah</b> — finally understanding something. <span class="ex">"Ah, I get it now!"</span></li>
-        <li><b>Uh / Er</b> — hesitating or thinking. <span class="ex">"Uh... let me think... it was, er... The Green Lantern!"</span></li>
-        <li><b>Ouch</b> — sudden physical pain. <span class="ex">"Ouch! I just hit my elbow on the wall."</span></li>
-        <li><b>Oops</b> — realizing you made a small mistake. <span class="ex">"Oops, I accidentally added salt instead of sugar."</span></li>
+        <li><b>Oh</b> — surprise or sadness. <span class="ex">"Oh! I didn't realize."</span></li>
+        <li><b>Ah</b> — sudden understanding. <span class="ex">"Ah, I see!"</span></li>
+        <li><b>Ouch</b> — sudden physical pain. <span class="ex">"Ouch! That hurt."</span></li>
+        <li><b>Oops</b> — realizing a small mistake. <span class="ex">"Oops, I spilled it."</span></li>
       </ul>`},
-    {type:"selectAll", prompt:"Titles and interjections both help us communicate respect and emotion instantly. <b>Click on each interjection</b> to learn what it expresses.",
+    {type:"quickCheck", q:"Your friend suddenly realizes she understands a difficult concept. Which interjection best shows this?",
+      options:["Ah!","Oops!","Ouch!"], correctIndex:0,
+      feedback:"Ah! is the classic interjection for sudden understanding or realization. Compare: 'Oops!' is for mistakes, 'Ouch!' is for pain."},
+    {type:"quickCheck", q:"Someone steps on your foot by accident. Which interjection would you say?",
+      options:["Ouch!","Oops!","Ah!"], correctIndex:0,
+      feedback:"Ouch! signals sudden physical pain. 'Oops!' would be what the person stepping on you says when they realize their mistake."},
+    {type:"selectAll", prompt:"Titles and interjections both communicate instantly. <b>Click on each interjection</b> to see what it expresses.",
       items:[
-        {label:"Uh-uh", info:"An informal way of saying 'No' — often paired with shaking your head."},
-        {label:"Uh-huh", info:"An informal way of saying 'Yes' — often paired with nodding."},
-        {label:"Uh-oh", info:"Used when you realize there's a problem or something has gone wrong."},
+        {label:"Uh-uh", info:"An informal way of saying 'No' — often with head shaking."},
+        {label:"Uh-huh", info:"An informal way of saying 'Yes' — often with nodding."},
+        {label:"Uh-oh", info:"Used when you realize there's a problem."},
       ],
-      wrapup:"Interjections like these carry meaning entirely through sound and tone — there's no formal grammar rule, just shared convention."
+      wrapup:"Notice: these three all start with 'Uh' but mean completely different things. Sound and tone carry all the meaning — no grammar rule here, just convention."
     },
-    {type:"carouselClassify", prompt:"Take another look at these words and phrases. Decide whether each one is a Title or an Interjection.",
+    {type:"carouselClassify", prompt:"Decide whether each item is a Title (a word you use before a name) or an Interjection (a quick sound for emotion).",
       buttons:["Title","Interjection"],
       cards:[
-        {text:"Ms.", correctIndex:0, feedback:"\"Ms.\" is a title — it goes before a name to address someone respectfully."},
-        {text:"Uh-oh!", correctIndex:1, feedback:"\"Uh-oh\" is an interjection — a short sound expressing that something's gone wrong, not a way to address someone."},
-        {text:"Sir", correctIndex:0, feedback:"\"Sir\" is a general title used when you don't know someone's name."},
-        {text:"Oops!", correctIndex:1, feedback:"\"Oops\" is an interjection — it expresses realizing a small mistake, on its own with no grammar rule attached."}
+        {text:"Ms.", correctIndex:0, feedback:"'Ms.' is a title — it goes before a name to address someone respectfully."},
+        {text:"Uh-oh!", correctIndex:1, feedback:"'Uh-oh' is an interjection — a quick sound expressing that something's gone wrong."},
+        {text:"Sir", correctIndex:0, feedback:"'Sir' is a title used when you don't know a man's name."},
+        {text:"Oops!", correctIndex:1, feedback:"'Oops' is an interjection — it expresses realizing a small mistake."}
       ]},
     {type:"matchPairs", prompt:"Match each title or interjection with its meaning.",
-      tip:"Re-read the definitions above — each title or interjection has exactly one matching meaning.",
+      tip:"Re-read the definitions above — each item has exactly one matching meaning.",
       pairs:[
         {left:"Mr.", right:"Used for any man, regardless of marital status"},
-        {left:"Uh-huh", right:"An informal way of saying \"Yes\""},
+        {left:"Uh-huh", right:"An informal way of saying 'Yes'"},
         {left:"Oops!", right:"Realizing you've made a small mistake"},
         {left:"Sir", right:"Used when you don't know a man's name"}
       ]},
     {type:"fillBlank",
-      prompt:`This title is used for a woman who is not married or for a young girl — and can also politely get someone's attention: <span class="blank-tag BLANK">&nbsp;</span>.`,
+      prompt:`This title is used for an unmarried woman or young girl — and can also politely get someone's attention: <span class="blank-tag BLANK">&nbsp;</span>.`,
       options:["Miss","Mrs."], correctIndex:0,
-      hint:"Think about which title fits both an unmarried woman AND a polite way to get someone's attention — only one of these can do both jobs.",
-      feedback:"Miss is used for an unmarried woman or a young girl, and works as a polite way to catch someone's attention, e.g. \"Excuse me, Miss?\""},
+      hint:"Think about which title works both for unmarried women AND as a polite way to address a stranger. Only one fits both.",
+      feedback:"Miss is used for an unmarried woman or young girl, and works as a polite way to catch attention, e.g. 'Excuse me, Miss?'"},
     {type:"fillBlank",
-      prompt:`Used to show that you realize there is a problem or something has gone wrong: <span class="blank-tag BLANK">&nbsp;</span>.`,
+      prompt:`Used to show that you just realized there's a problem or something has gone wrong: <span class="blank-tag BLANK">&nbsp;</span>.`,
       options:["Uh-oh","Ah"], correctIndex:0,
-      hint:"One of these expresses sudden realization that something's wrong; the other expresses finally understanding something. Which fits \"a problem\"?",
-      feedback:"Uh-oh signals you've just noticed something's wrong — like seeing a cup about to spill."},
+      hint:"One expresses sudden realization that something's wrong; the other expresses finally understanding something. Which is the problem?",
+      feedback:"'Uh-oh' signals you've just noticed something's wrong — like seeing danger or a mistake about to happen."},
     {type:"explain", body:[
-      "Titles and interjections are small words, but they carry a lot of social weight — they signal respect, familiarity, and emotion in a single syllable.",
-      "Getting them right helps you sound natural and considerate in both formal writing and everyday spoken English."
+      "Titles and interjections are small words, but they carry big social weight — they signal respect, familiarity, and emotion in a single syllable.",
+      "Getting them right helps you sound natural and considerate in both formal writing and everyday speech."
     ]}
   ]
 },
@@ -1288,7 +1300,8 @@ function saveProgress(){
       lastVisit: state.lastVisit,
       firstVisit: state.firstVisit,
       soundOn: state.soundOn,
-      certificateName: state.certificateName
+      certificateName: state.certificateName,
+      exerciseScore: state.exerciseScore
     }));
   }catch(e){ /* storage unavailable, fail silently */ }
 }
@@ -1306,6 +1319,7 @@ function initProgressAndStreak(){
     state.firstVisit = saved.firstVisit || todayStr;
     state.soundOn = saved.soundOn !== undefined ? saved.soundOn : true;
     state.certificateName = saved.certificateName || '';
+    state.exerciseScore = saved.exerciseScore || {};
     if(state.lastVisit !== todayStr){
       const y = new Date(); y.setDate(y.getDate()-1);
       state.streak = (state.lastVisit === y.toDateString()) ? state.streak + 1 : 1;
@@ -1332,11 +1346,23 @@ function levelForXp(xp){
 }
 
 /* ============ MASTERY QUIZZES (per lesson) ============ */
+const REMEDIAL_ITEMS = [
+  // Lesson 1 (Lesson 0) remedial questions
+  {skill:"title-context", q:"In a casual setting, when you want to politely get a young woman's attention but don't know her name, which title works?", options:["Miss","Ma'am","Ms."], correctIndex:0, explain:"'Miss' functions both as a title for unmarried women and as a polite attention-getter."},
+  {skill:"title-professional", q:"You're sending a work email to someone whose name is 'Sam Riley' but you don't know their gender. What greeting should you use?", options:["Dear Ms. Riley","Dear Mr. Riley","Dear Sam Riley"], correctIndex:2, explain:"When unsure, using the full name without a gendered title avoids guessing."},
+  {skill:"interjection-emotion", q:"Your friend spills coffee on their shirt. Which interjection would THEY likely say?", options:["Oops!","Ouch!","Ah!"], correctIndex:0, explain:"'Oops!' is for mistakes; 'Ouch!' is for pain; 'Ah!' is for understanding."},
+  
+  // Lesson 2 remedial
+  {skill:"verb-form-V3", q:"The past participle (V3) of 'swim' is:", options:["swum","swam","swimming"], correctIndex:0, explain:"'Swam' is V2 (simple past); 'swum' is V3 (used with have/had)."},
+  {skill:"idiom-meaning", q:"'To have cold feet' means:", options:["to be nervous about doing something","to have wet feet","to be physically cold"], correctIndex:0, explain:"Idioms' meanings don't come from their literal words."},
+  {skill:"pronoun-possessive", q:"Which form completes: 'This backpack is ___.'", options:["mine","my","myself"], correctIndex:0, explain:"Possessive pronouns ('mine', 'yours', 'his') stand alone."},
+];
+
 const MASTERY_QUIZZES = [
   { lessonIdx:0, questions:[
-    {q:"Which title politely gets a stranger's attention when you don't know her name and she appears unmarried?", options:["Miss","Mrs.","Sir"], correctIndex:0, explain:"\"Miss\" works both as a title for an unmarried woman and as a polite way to catch her attention."},
-    {q:"\"Uh-oh\" is used to express...", options:["realizing something has gone wrong","agreement (yes)","physical pain"], correctIndex:0, explain:"\"Uh-oh\" signals you've just noticed a problem."},
-    {q:"Which title is the safest default for any woman in a professional email?", options:["Ms.","Miss","Madam"], correctIndex:0, explain:"\"Ms.\" is the most versatile, widely accepted professional title regardless of marital status."}
+    {q:"Which title politely gets a stranger's attention when you don't know her name and she appears unmarried?", options:["Miss","Mrs.","Sir"], correctIndex:0, skill:"title-context", explain:"\"Miss\" works both as a title for an unmarried woman and as a polite way to catch her attention."},
+    {q:"\"Uh-oh\" is used to express...", options:["realizing something has gone wrong","agreement (yes)","physical pain"], correctIndex:0, skill:"interjection-emotion", explain:"\"Uh-oh\" signals you've just noticed a problem."},
+    {q:"Which title is the safest default for any woman in a professional email?", options:["Ms.","Miss","Madam"], correctIndex:0, skill:"title-professional", explain:"\"Ms.\" is the most versatile, widely accepted professional title regardless of marital status."}
   ]},
   { lessonIdx:1, questions:[
     {q:"What is the past participle (V3) of \"eat\"?", options:["eaten","ate","eating"], correctIndex:0, explain:"\"Ate\" is the simple past (V2); \"eaten\" is the past participle (V3), used with have/had."},
@@ -1439,7 +1465,7 @@ const MILESTONES = [
       {q:"Complete: \"By the time I arrived, the train ___.\"", options:["had already left","already left","was leaving"], correctIndex:0, explain:"The train's departure happened before I arrived — the earlier event takes the Past Perfect."},
       {q:"Which auxiliary does the Past Perfect use for every subject?", options:["had","have/has","did"], correctIndex:0, explain:"\"Had\" never changes with the subject — that's what makes the Past Perfect simple to form."}
     ]},
-  { id:'final', afterLesson:11, isFinal:true, title:"Final Exam: English Communication & Grammar Mastery", passScore:8, suggestedDays:30,
+  { id:'final', afterLesson:11, isFinal:true, title:"Final Exam: English Communication & Grammar Mastery", passScore:9, suggestedDays:30,
     questions:[
       {q:"Which title is the safest default for any woman in professional writing, regardless of marital status?", options:["Ms.","Mrs.","Miss"], correctIndex:0, explain:"Ms. works regardless of marital status, making it the safest default in professional writing."},
       {q:"What is the past participle (V3) of \"eat\"?", options:["eaten","ate","eating"], correctIndex:0, explain:"\"Ate\" is the simple past (V2); \"eaten\" is the past participle (V3), used with have/had."},
@@ -1456,7 +1482,7 @@ const MILESTONES = [
 ];
 
 const state = { view:"course", lessonIdx:0, screenIdx:0, done:new Set(), answers:{}, supportOpen:false, tutor:{open:false, msgs:{}}, navToast:null, bookmarked:false, showSummaries:false,
-  xp:0, streak:0, lastVisit:null, firstVisit:null, masteryPassed:{}, milestonesPassed:{}, masteryState:{}, milestoneState:{}, wrongAttempts:{}, soundOn:true, certificateName:'' };
+  xp:0, streak:0, lastVisit:null, firstVisit:null, masteryPassed:{}, milestonesPassed:{}, masteryState:{}, milestoneState:{}, wrongAttempts:{}, soundOn:true, certificateName:'', exerciseScore:{} };
 initProgressAndStreak();
 
 /* ============ CLICK SOUND ============ */
@@ -1764,9 +1790,9 @@ function tutorPanelHtml(){
   }
   return `
   <div class="tutor-panel">
-    <div class="tutor-panel-head"><span>🤖 AI Tutor</span><span class="tp-close" onclick="toggleAiTutor()">✕</span></div>
+    <div class="tutor-panel-head"><span>💡 Hint Helper</span><span class="tp-close" onclick="toggleAiTutor()">✕</span></div>
     <div class="tutor-panel-body">
-      <div class="tutor-disclaimer">Have a question? Chat with AI Tutor for help with coursework or extra practice. Note that conversation history may be used to improve future bot interactions.</div>
+      <div class="tutor-disclaimer">Need a hint? Hint Helper gives you focused tips and rule-of-thumb explanations for this lesson's topic. It won't give you the answer — just a nudge in the right direction.</div>
       ${msgs.map(m=>`<div class="tutor-msg ${m.role}">${m.role==='user' ? escapeHtml(m.text) : m.text}</div>`).join('')}
       ${isFirstTurn ? `
       <div class="tutor-quick">
@@ -1779,7 +1805,7 @@ function tutorPanelHtml(){
       </div>` : ''}
     </div>
     <div class="tutor-input-row">
-      <input id="tutorInputEl" type="text" placeholder="Message AI Tutor" onkeydown="tutorInputKeydown(event)" />
+      <input id="tutorInputEl" type="text" placeholder="Ask for a hint..." onkeydown="tutorInputKeydown(event)" />
       <button onclick="sendTutorMessage()">Send</button>
     </div>
   </div>`;
@@ -1793,12 +1819,29 @@ function quizBodyHtml(quiz, onPassCb, onRetryCb, exitLabel){
   const total = quiz.questions.length;
   if(qIdx >= total){
     const correctCount = quiz.picks.filter((p,i)=>p===quiz.questions[i].correctIndex).length;
-    const passed = correctCount >= quiz.passScore;
+    let passed, scoreLabel, exStats = null, beyondQuizRecovery = false;
+    if(quiz.kind === 'mastery' || quiz.kind === 'mastery-remedial'){
+      exStats = computeLessonExerciseScore(state.lessonIdx);
+      const combinedCorrect = exStats.correct + correctCount;
+      const combinedTotal = exStats.total + total;
+      const pct = combinedTotal>0 ? Math.round((combinedCorrect/combinedTotal)*100) : 100;
+      const maxPossiblePct = combinedTotal>0 ? Math.round(((exStats.correct+total)/combinedTotal)*100) : 100;
+      passed = pct >= 80;
+      beyondQuizRecovery = !passed && maxPossiblePct < 80;
+      scoreLabel = `${pct}%`;
+      // For remedial, show explicit message about stricter requirement
+      const remedialNote = quiz.kind === 'mastery-remedial' ? ' (Remedial: focused on skills you missed)' : '';
+    } else {
+      passed = correctCount >= quiz.passScore;
+      scoreLabel = `${correctCount} / ${total}`;
+    }
     return `
       <div class="quiz-results">
-        <div class="qr-score ${passed?'pass':'fail'}">${correctCount} / ${total}</div>
+        <div class="qr-score ${passed?'pass':'fail'}">${scoreLabel}</div>
+        ${quiz.kind === 'mastery' ? `<div class="qr-pct">Exercises: ${exStats.correct}/${exStats.total} · Mastery Check: ${correctCount}/${total} · 80% overall needed to pass</div>` : ''}
         <div class="qr-verdict">${passed ? '✅ Mastery Achieved!' : '❌ Not Quite Yet'}</div>
         <div class="qr-detail">
+          ${beyondQuizRecovery ? `<div class="qr-row bad"><div class="qr-a">Too many earlier exercises in this lesson were missed for a quiz retake alone to reach 80%. Use "Redo Entire Lesson" below to try again from the start.</div></div>` : ''}
           ${quiz.questions.map((q,i)=>`
             <div class="qr-row ${quiz.picks[i]===q.correctIndex?'ok':'bad'}">
               <div class="qr-q">${i+1}. ${q.q}</div>
@@ -1808,7 +1851,9 @@ function quizBodyHtml(quiz, onPassCb, onRetryCb, exitLabel){
         </div>
         ${passed
           ? `<button class="btn-green" style="padding:12px 30px;" onclick="${onPassCb}">CONTINUE</button>`
-          : `<button class="btn-green" style="padding:12px 30px;background:var(--pink);" onclick="${onRetryCb}">TRY AGAIN</button>`}
+          : beyondQuizRecovery
+            ? `<button class="btn-green" style="padding:12px 30px;background:var(--pink);" onclick="resetLessonProgress(${state.lessonIdx})">REDO ENTIRE LESSON</button>`
+            : `<button class="btn-green" style="padding:12px 30px;background:var(--pink);" onclick="${onRetryCb}">TRY AGAIN</button>`}
       </div>`;
   }
   const q = quiz.questions[qIdx];
@@ -1847,8 +1892,40 @@ function quizNext(){
 }
 function quizRetryMastery(){
   const quiz = state.quiz;
-  quiz.qIdx = 0;
-  quiz.picks = new Array(quiz.questions.length).fill(null);
+  
+  // Detect which skills were missed (if questions have skill tags)
+  const missed = [];
+  quiz.questions.forEach((q, i) => {
+    if(quiz.picks[i] !== q.correctIndex && q.skill) {
+      if(!missed.includes(q.skill)) missed.push(q.skill);
+    }
+  });
+  
+  // If questions have skill tags, build a targeted remedial quiz
+  if(missed.length > 0 && REMEDIAL_ITEMS.length > 0) {
+    const remedialQuestions = REMEDIAL_ITEMS.filter(r => missed.includes(r.skill));
+    const originalQs = quiz.questions.filter(q => !q.skill || !missed.includes(q.skill));
+    
+    // Mix 2-3 remedial + 2-3 original = 4-6 total, pass 80%+
+    const mixed = [
+      ...remedialQuestions.slice(0, 3),
+      ...originalQs.slice(0, 3)
+    ].slice(0, 6);
+    
+    state.quiz = {
+      kind: 'mastery-remedial',
+      questions: mixed,
+      passScore: 5,  // 5 out of 6 = 83%, stricter than original 2/3
+      qIdx: 0,
+      picks: new Array(mixed.length).fill(null),
+      isRemedial: true
+    };
+  } else {
+    // Fallback: just reset picks and try again
+    quiz.qIdx = 0;
+    quiz.picks = new Array(quiz.questions.length).fill(null);
+  }
+  
   renderLessonScreen();
 }
 function quizRetryMilestone(){
@@ -1921,7 +1998,7 @@ function renderMilestoneScreen(){
       <div class="player-body">
         <div class="support-tab" onclick="toggleSupport()">Support</div>
         ${quizBodyHtml(quiz, 'passMilestoneAndFinish()', 'quizRetryMilestone()')}
-        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       </div>
     </div>
     ${supportModalHtml()}`;
@@ -2200,7 +2277,7 @@ function playRawRecording(){
 }
 
 /* --- security: escape user-typed text before inserting into innerHTML, to
-   prevent XSS via the AI Tutor chat input or the certificate name field --- */
+   prevent XSS via the Hint Helper chat input or the certificate name field --- */
 function escapeHtml(str){
   return String(str)
     .replace(/&/g, '&amp;')
@@ -2618,7 +2695,7 @@ function renderLessonScreen(){
         <div class="lesson-sub">WHAT YOU'LL LEARN IN THIS LESSON</div>
         <ul class="obj-list">${l.objectives.map(o=>`<li>${o}</li>`).join('')}</ul>
         <div class="pron-entry-row"><button class="pron-entry-btn" onclick="openPronunciation()">🎤 Practice Pronunciation</button></div>
-        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
         <div class="center-btn-wrap"><button class="btn-green" style="padding:12px 34px;" onclick="nextScreen()">GET STARTED</button></div>
       </div>
       ${supportModalHtml()}
@@ -2632,9 +2709,9 @@ function renderLessonScreen(){
     const inner = `
       ${playerHeader()}
       <div class="player-body">
-        <div class="mastery-banner">🎯 MASTERY CHECK — answer ${state.quiz ? Math.ceil(state.quiz.passScore) : 2}+ of ${state.quiz ? state.quiz.questions.length : 3} correctly to complete this lesson</div>
+        <div class="mastery-banner">🎯 MASTERY CHECK — score at least 80% across this lesson's exercises and this check to complete the lesson</div>
         ${quizBodyHtml(state.quiz, 'passMasteryAndFinish()', 'quizRetryMastery()')}
-        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+        <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       </div>`;
     finalizeScreenHtml(inner);
     return;
@@ -2657,7 +2734,7 @@ function renderContentScreen(screen){
       <div class="support-tab" onclick="toggleSupport()">Support</div>
       ${screen.title?`<div class="content-title">${screen.title}</div>`:''}
       <div class="content-body">${screen.body}</div>
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       <div class="continue-row"><button class="btn-green" onclick="nextScreen()">CONTINUE</button></div>
     </div>
     ${supportModalHtml()}`;
@@ -2665,6 +2742,46 @@ function renderContentScreen(screen){
 }
 
 function key(){ return `L${state.lessonIdx}S${state.screenIdx}`; }
+
+/* --- lesson-wide scoring: every gradable exercise (quickCheck, carouselClassify
+   card, matchPairs pair, fillBlank) records whether it was answered correctly
+   on the FIRST attempt. A wrong attempt permanently records that exercise as
+   incorrect for scoring purposes, even if the student then finds the right
+   answer and continues — this is what makes a wrong answer "cost" toward the
+   80% passing bar, without blocking the student from moving on. */
+function recordExerciseResult(subKey, correctFirstTry){
+  if(state.exerciseScore[subKey] !== undefined) return; // only the first attempt counts
+  state.exerciseScore[subKey] = correctFirstTry ? 1 : 0;
+  saveProgress();
+}
+function computeLessonExerciseScore(lessonIdx){
+  const prefix = `L${lessonIdx}S`;
+  let correct = 0, total = 0;
+  Object.keys(state.exerciseScore).forEach(k=>{
+    if(k.startsWith(prefix)){
+      total++;
+      correct += state.exerciseScore[k];
+    }
+  });
+  return { correct, total };
+}
+/* Safety valve: if a student has missed so many exercises earlier in the lesson
+   that even a perfect Mastery Check retake can't reach 80% overall, retaking just
+   the quiz can never succeed — so this clears the whole lesson's recorded scores
+   and restarts it from screen 1, giving a real path to passing again. */
+function resetLessonProgress(lessonIdx){
+  const prefix = `L${lessonIdx}S`;
+  Object.keys(state.exerciseScore).forEach(k=>{ if(k.startsWith(prefix)) delete state.exerciseScore[k]; });
+  Object.keys(state.answers).forEach(k=>{ if(k.startsWith(prefix)) delete state.answers[k]; });
+  Object.keys(state.wrongAttempts).forEach(k=>{ if(k.startsWith(prefix)) delete state.wrongAttempts[k]; });
+  state.masteryPassed[lessonIdx] = false;
+  state.done.delete(lessonIdx);
+  state.quiz = null;
+  saveProgress();
+  state.lessonIdx = lessonIdx;
+  state.screenIdx = 0;
+  renderLessonScreen();
+}
 
 function renderSelectAllScreen(screen){
   const k = key();
@@ -2687,9 +2804,9 @@ function renderSelectAllScreen(screen){
       ${!allSelected && st.last===null ? `
       <div class="fc-hint">
         <div class="fc-title">☀ Feeling Curious?</div>
-        AI Tutor is here to help! Click each item to learn more and guide you to the right solution.
+        Want to understand each item better? Use the Hint Helper below for focused tips on this lesson's topic.
       </div>` : ''}
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       ${st.last!==null ? `
       <div class="tutor-callout blue">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
@@ -2887,9 +3004,11 @@ function submitSpokenFillBlank(){
   const k = key();
   if(result.keyGood){
     state.answers[k] = screen.correctIndex;
+    recordExerciseResult(k, (state.wrongAttempts[k]||0) === 0);
     addXp(8);
   } else {
     state.wrongAttempts[k] = (state.wrongAttempts[k] || 0) + 1;
+    recordExerciseResult(k, false);
   }
   renderFillBlankScreen(screen);
 }
@@ -2961,7 +3080,7 @@ function renderFillBlankScreen(screen){
         </div>
       ` : ''}
 
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       ${picked!==null ? `
       <div class="tutor-callout green">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
@@ -2972,7 +3091,7 @@ function renderFillBlankScreen(screen){
       <div class="tutor-callout amber">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
         💡 <b>Hint:</b> ${screen.hint}
-        ${showNudge ? `<button class="btn-green" style="background:#5a3d00;" onclick="nudgeOpenTutor()">Still stuck? Ask AI Tutor</button>` : ''}
+        ${showNudge ? `<button class="btn-green" style="background:#5a3d00;" onclick="nudgeOpenTutor()">Still stuck? Get More Help</button>` : ''}
       </div>` : ''}
     </div>
     ${supportModalHtml()}`;
@@ -2983,10 +3102,12 @@ function pickFillBlank(i, correctIndex){
   if(i !== correctIndex){
     state.wrongAttempts[k] = (state.wrongAttempts[k] || 0) + 1;
     state.lastWrongPick = {key:k, idx:i};
+    recordExerciseResult(k, false);
     renderFillBlankScreen(LESSONS[state.lessonIdx].screens[state.screenIdx]);
     return;
   }
   state.answers[k] = i;
+  recordExerciseResult(k, (state.wrongAttempts[k]||0) === 0);
   addXp(5);
   renderFillBlankScreen(LESSONS[state.lessonIdx].screens[state.screenIdx]);
 }
@@ -3007,7 +3128,7 @@ function renderExplainScreen(screen){
       <div class="content-body" style="max-width:560px;">
         ${screen.body.map(p=>`<p>${p}</p>`).join('')}
       </div>
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       <div class="continue-row"><button class="btn-green" onclick="nextScreen()">${isLast ? 'TAKE MASTERY CHECK →' : 'CONTINUE'}</button></div>
     </div>
     ${supportModalHtml()}`;
@@ -3036,7 +3157,7 @@ function renderQuickCheckScreen(screen){
           return `<div class="option-item ${cls}" onclick="pickQuickCheck(${i}, ${screen.correctIndex})">${opt}</div>`;
         }).join('')}
       </div>
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       ${picked !== null ? `
       <div class="tutor-callout ${picked===screen.correctIndex?'green':'blue'}">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
@@ -3051,6 +3172,7 @@ function pickQuickCheck(i, correctIndex){
   const k = key();
   if(state.answers[k] !== undefined) return;
   state.answers[k] = i;
+  recordExerciseResult(k, i === correctIndex);
   if(i === correctIndex) addXp(5);
   renderLessonScreen();
 }
@@ -3071,8 +3193,13 @@ function pickCarouselAnswer(btnIdx){
   const screen = LESSONS[state.lessonIdx].screens[state.screenIdx];
   const c = screen.cards[carouselState.idx];
   if(carouselState.answers[carouselState.idx] !== null) return;
-  if(btnIdx !== c.correctIndex) return;
+  const subKey = key()+'C'+carouselState.idx;
+  if(btnIdx !== c.correctIndex){
+    recordExerciseResult(subKey, false); // first wrong click locks this card's score as incorrect
+    return;
+  }
   carouselState.answers[carouselState.idx] = btnIdx;
+  recordExerciseResult(subKey, true); // no-op if a wrong click already recorded this card
   addXp(5);
   const k = key();
   const allDone = carouselState.answers.every(a=>a!==null);
@@ -3109,7 +3236,7 @@ function renderCarouselClassifyScreen(screen){
           return `<button class="carousel-choice-btn ${cls}" onclick="pickCarouselAnswer(${i})">${b}</button>`;
         }).join('')}
       </div>
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       ${answered!==null ? `
       <div class="tutor-callout green">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
@@ -3155,14 +3282,17 @@ function clickMatchRight(rightIdx){
   if(matchPairsState.selectedLeft === null) return;
   if(matchPairsState.matched.some(li=>screen.pairs[li].right===rightText)) return;
   const li = matchPairsState.selectedLeft;
+  const subKey = key()+'P'+li;
   if(screen.pairs[li].right === rightText){
     matchPairsState.matched.push(li);
     matchPairsState.selectedLeft = null;
     matchPairsState.wrongFlash = null;
+    recordExerciseResult(subKey, true); // no-op if a wrong attempt already recorded this pair
     addXp(5);
     const allDone = matchPairsState.matched.length === screen.pairs.length;
     if(allDone){ state.answers[key()] = true; }
   } else {
+    recordExerciseResult(subKey, false); // first wrong attempt locks this pair's score as incorrect
     matchPairsState.wrongFlash = screen.tip || "Not quite — take another look and try again.";
     matchPairsState.selectedLeft = null;
   }
@@ -3195,7 +3325,7 @@ function renderMatchPairsScreen(screen){
         </div>
       </div>
       ${matchPairsState.wrongFlash ? `<div class="match-tip">${matchPairsState.wrongFlash}</div>` : ''}
-      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>AI TUTOR</small>Explain This Screen</div>
+      <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
       ${allDone ? `<div class="continue-row"><button class="btn-green" onclick="nextScreen()">CONTINUE</button></div>` : ''}
     </div>
     ${supportModalHtml()}`;
@@ -3292,8 +3422,8 @@ function renderCertificateScreen(){
         <div class="cert-meta">11 Lessons · 4 Milestone Exams · Final Exam Passed</div>
         <div class="cert-footer">
           <div class="cert-sig-block">
-            <div class="cert-sig-line">AI Tutor</div>
-            <div class="cert-sig-label">Course Instructor</div>
+            <div class="cert-sig-line">Quantic School of English</div>
+            <div class="cert-sig-label">Language Learning Platform</div>
           </div>
           <div class="cert-date-block">
             <div class="cert-sig-line">${dateStr}</div>
