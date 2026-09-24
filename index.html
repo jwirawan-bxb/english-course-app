@@ -1819,18 +1819,18 @@ function quizBodyHtml(quiz, onPassCb, onRetryCb, exitLabel){
   const total = quiz.questions.length;
   if(qIdx >= total){
     const correctCount = quiz.picks.filter((p,i)=>p===quiz.questions[i].correctIndex).length;
+    const EX_W = 0.4, QUIZ_W = 0.6; // exercises 40%, mastery check 60%
     let passed, scoreLabel, exStats = null, beyondQuizRecovery = false;
     if(quiz.kind === 'mastery' || quiz.kind === 'mastery-remedial'){
       exStats = computeLessonExerciseScore(state.lessonIdx);
-      const combinedCorrect = exStats.correct + correctCount;
-      const combinedTotal = exStats.total + total;
-      const pct = combinedTotal>0 ? Math.round((combinedCorrect/combinedTotal)*100) : 100;
-      const maxPossiblePct = combinedTotal>0 ? Math.round(((exStats.correct+total)/combinedTotal)*100) : 100;
+      const exPct   = exStats.total > 0 ? exStats.correct / exStats.total : 1;
+      const quizPct = total > 0 ? correctCount / total : 1;
+      const pct = Math.round((exPct * EX_W + quizPct * QUIZ_W) * 100);
+      // Best possible score if every mastery question is aced on the retry:
+      const maxPct = Math.round((exPct * EX_W + 1 * QUIZ_W) * 100);
       passed = pct >= 80;
-      beyondQuizRecovery = !passed && maxPossiblePct < 80;
+      beyondQuizRecovery = !passed && maxPct < 80;
       scoreLabel = `${pct}%`;
-      // For remedial, show explicit message about stricter requirement
-      const remedialNote = quiz.kind === 'mastery-remedial' ? ' (Remedial: focused on skills you missed)' : '';
     } else {
       passed = correctCount >= quiz.passScore;
       scoreLabel = `${correctCount} / ${total}`;
@@ -1838,7 +1838,7 @@ function quizBodyHtml(quiz, onPassCb, onRetryCb, exitLabel){
     return `
       <div class="quiz-results">
         <div class="qr-score ${passed?'pass':'fail'}">${scoreLabel}</div>
-        ${quiz.kind === 'mastery' ? `<div class="qr-pct">Exercises: ${exStats.correct}/${exStats.total} · Mastery Check: ${correctCount}/${total} · 80% overall needed to pass</div>` : ''}
+        ${(quiz.kind === 'mastery' || quiz.kind === 'mastery-remedial') ? `<div class="qr-pct">Exercises: ${exStats.correct}/${exStats.total} (40%) · Mastery Check: ${correctCount}/${total} (60%) · 80% overall needed to pass</div>` : ''}
         <div class="qr-verdict">${passed ? '✅ Mastery Achieved!' : '❌ Not Quite Yet'}</div>
         <div class="qr-detail">
           ${beyondQuizRecovery ? `<div class="qr-row bad"><div class="qr-a">Too many earlier exercises in this lesson were missed for a quiz retake alone to reach 80%. Use "Redo Entire Lesson" below to try again from the start.</div></div>` : ''}
@@ -1884,11 +1884,11 @@ function pickQuizAnswer(i){
   const quiz = state.quiz;
   if(!quiz || quiz.picks[quiz.qIdx] !== null) return;
   quiz.picks[quiz.qIdx] = i;
-  if(quiz.kind === 'mastery') renderLessonScreen(); else renderMilestoneScreen();
+  if(state.view === 'milestone') renderMilestoneScreen(); else renderLessonScreen();
 }
 function quizNext(){
   state.quiz.qIdx++;
-  if(state.quiz.kind === 'mastery') renderLessonScreen(); else renderMilestoneScreen();
+  if(state.view === 'milestone') renderMilestoneScreen(); else renderLessonScreen();
 }
 function quizRetryMastery(){
   const quiz = state.quiz;
