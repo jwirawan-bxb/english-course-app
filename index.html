@@ -1347,15 +1347,50 @@ function levelForXp(xp){
 
 /* ============ MASTERY QUIZZES (per lesson) ============ */
 const REMEDIAL_ITEMS = [
-  // Lesson 1 (Lesson 0) remedial questions
+  // Lesson 1
   {skill:"title-context", q:"In a casual setting, when you want to politely get a young woman's attention but don't know her name, which title works?", options:["Miss","Ma'am","Ms."], correctIndex:0, explain:"'Miss' functions both as a title for unmarried women and as a polite attention-getter."},
   {skill:"title-professional", q:"You're sending a work email to someone whose name is 'Sam Riley' but you don't know their gender. What greeting should you use?", options:["Dear Ms. Riley","Dear Mr. Riley","Dear Sam Riley"], correctIndex:2, explain:"When unsure, using the full name without a gendered title avoids guessing."},
   {skill:"interjection-emotion", q:"Your friend spills coffee on their shirt. Which interjection would THEY likely say?", options:["Oops!","Ouch!","Ah!"], correctIndex:0, explain:"'Oops!' is for mistakes; 'Ouch!' is for pain; 'Ah!' is for understanding."},
-  
-  // Lesson 2 remedial
-  {skill:"verb-form-V3", q:"The past participle (V3) of 'swim' is:", options:["swum","swam","swimming"], correctIndex:0, explain:"'Swam' is V2 (simple past); 'swum' is V3 (used with have/had)."},
-  {skill:"idiom-meaning", q:"'To have cold feet' means:", options:["to be nervous about doing something","to have wet feet","to be physically cold"], correctIndex:0, explain:"Idioms' meanings don't come from their literal words."},
-  {skill:"pronoun-possessive", q:"Which form completes: 'This backpack is ___.'", options:["mine","my","myself"], correctIndex:0, explain:"Possessive pronouns ('mine', 'yours', 'his') stand alone."},
+  // Lesson 2
+  {skill:"verb-form-V3", q:"What is the past participle (V3) of 'go'?", options:["gone","went","going"], correctIndex:0, explain:"'Went' is V2 (simple past); 'gone' is V3 (used with have/had)."},
+  {skill:"idiom-meaning", q:"'To hit the books' means:", options:["to study hard","to physically strike a book","to be clumsy"], correctIndex:0, explain:"Idioms carry meaning that isn't literal."},
+  {skill:"pronoun-possessive", q:"That car is ___.", options:["theirs","their","themselves"], correctIndex:0, explain:"'Theirs' is the possessive pronoun — it stands alone."},
+  // Lesson 3
+  {skill:"auxiliary-question", q:"Which auxiliary makes a question with 'she' in the Simple Present?", options:["Does","Do","Did"], correctIndex:0, explain:"'Does' pairs with he/she/it; 'Do' with I/you/we/they."},
+  {skill:"modal-obligation", q:"Which modal expresses obligation or strong necessity?", options:["must","might","could"], correctIndex:0, explain:"'Must' signals obligation; 'might' is possibility; 'could' is past ability/possibility."},
+  {skill:"passive-voice", q:"Which sentence is passive voice?", options:["The letter was written by Tom.","Tom wrote the letter.","Tom is writing a letter."], correctIndex:0, explain:"Passive = Subject + to be + V3, with the doer after 'by'."},
+  // Lesson 4
+  {skill:"third-person-s", q:"He ___ to school every day.", options:["walks","walk","is walking"], correctIndex:0, explain:"He/she/it adds s/es in the Simple Present."},
+  {skill:"simple-present-marker", q:"Which word signals a habitual action?", options:["always","right now","yesterday"], correctIndex:0, explain:"'Always' is a frequency marker for habits; 'right now' is present continuous; 'yesterday' is simple past."},
+  {skill:"do-does-question", q:"___ they like pizza?", options:["Do","Does","Did"], correctIndex:0, explain:"'They' pairs with 'Do' in the Simple Present."},
+  // Lesson 5
+  {skill:"continuous-now", q:"Look! She ___ right now.", options:["is running","runs","ran"], correctIndex:0, explain:"'Right now' signals an action in progress — Present Continuous."},
+  {skill:"future-arrangement", q:"We ___ the dentist tomorrow.", options:["are seeing","see","saw"], correctIndex:0, explain:"Present Continuous covers scheduled future arrangements."},
+  {skill:"continuous-formula", q:"Continuous tenses use which auxiliary?", options:["to be (am/is/are)","to do","to have"], correctIndex:0, explain:"Every continuous tense is built on 'to be' + V-ing."},
+  // Lesson 6
+  {skill:"possession-simple", q:"They ___ a house near the park.", options:["own","are owning","owned"], correctIndex:0, explain:"Possession verbs stay in Simple Present even for current states."},
+  {skill:"think-opinion", q:"I ___ this is a good idea.", options:["think","am thinking","thought"], correctIndex:0, explain:"'Think' for opinion is non-progressive — 'I think' not 'I am thinking.'"},
+  {skill:"non-progressive-identify", q:"Which is a non-progressive verb?", options:["know","run","build"], correctIndex:0, explain:"'Know' is a mental state — states don't take -ing."},
+  // Lesson 7
+  {skill:"simple-past-marker", q:"I ___ him yesterday.", options:["saw","see","have seen"], correctIndex:0, explain:"'Yesterday' is a finished-past marker, which forces Simple Past."},
+  {skill:"did-auxiliary", q:"___ you call her last night?", options:["Did","Do","Does"], correctIndex:0, explain:"Simple Past questions use 'Did' for every subject."},
+  {skill:"ago-marker", q:"'Three days ___' — which word goes with 'three days'?", options:["ago","before","since"], correctIndex:0, explain:"'Ago' counts backward from now; 'since' points to a starting point; 'before' is relative."},
+  // Lesson 8
+  {skill:"past-continuous-interrupt", q:"I ___ when she arrived.", options:["was sleeping","slept","sleep"], correctIndex:0, explain:"The ongoing background action takes Past Continuous; the interruption takes Simple Past."},
+  {skill:"was-were-agreement", q:"They ___ studying when I called.", options:["were","was","are"], correctIndex:0, explain:"'They' is plural, so Past Continuous uses 'were.'"},
+  {skill:"interrupted-action", q:"Which sentence shows an interrupted action?", options:["I was eating when the phone rang.","I ate dinner.","I eat dinner every day."], correctIndex:0, explain:"An interrupted action = ongoing past (was/were + V-ing) broken by a shorter Simple Past."},
+  // Lesson 9
+  {skill:"present-perfect-duration", q:"She ___ here for ten years.", options:["has lived","lived","lives"], correctIndex:0, explain:"'For ten years' spans into the present → Present Perfect."},
+  {skill:"ever-never", q:"I have ___ been to Africa.", options:["never","ever","yet"], correctIndex:0, explain:"'Never' = at no point in life. 'Ever' is for questions/negatives; 'yet' for negatives/questions about recent completion."},
+  {skill:"have-has-agreement", q:"They ___ finished the project.", options:["have","has","had"], correctIndex:0, explain:"'They' pairs with 'have,' not 'has.'"},
+  // Lesson 10
+  {skill:"perfect-continuous-duration", q:"He ___ for two hours.", options:["has been running","runs","ran"], correctIndex:0, explain:"Duration continuing to now → Present Perfect Continuous."},
+  {skill:"visible-result", q:"Her eyes are red. She ___.", options:["has been crying","cries","cried"], correctIndex:0, explain:"Recently-stopped action with a visible present result = Present Perfect Continuous."},
+  {skill:"been-v-ing-signal", q:"Which formula is Present Perfect Continuous?", options:["have/has + been + V-ing","have/has + V3","was/were + V-ing"], correctIndex:0, explain:"'Been + V-ing' is the signature of Present Perfect Continuous."},
+  // Lesson 11
+  {skill:"past-perfect-earlier", q:"The train ___ before I arrived.", options:["had left","left","was leaving"], correctIndex:0, explain:"The earlier of two past events takes Past Perfect (had + V3)."},
+  {skill:"had-auxiliary", q:"Past Perfect uses which auxiliary?", options:["had","have/has","did"], correctIndex:0, explain:"'Had' never changes with the subject."},
+  {skill:"sequencing", q:"'After she had eaten, she left.' — which action happened first?", options:["eating","leaving","both at once"], correctIndex:0, explain:"The Past Perfect marks the earlier action."},
 ];
 
 const MASTERY_QUIZZES = [
@@ -1365,54 +1400,54 @@ const MASTERY_QUIZZES = [
     {q:"Which title is the safest default for any woman in a professional email?", options:["Ms.","Miss","Madam"], correctIndex:0, skill:"title-professional", explain:"\"Ms.\" is the most versatile, widely accepted professional title regardless of marital status."}
   ]},
   { lessonIdx:1, questions:[
-    {q:"What is the past participle (V3) of \"eat\"?", options:["eaten","ate","eating"], correctIndex:0, explain:"\"Ate\" is the simple past (V2); \"eaten\" is the past participle (V3), used with have/had."},
-    {q:"\"To have cold feet\" is an example of...", options:["an idiom","a phrase","a clause"], correctIndex:0, explain:"Its meaning (being nervous) isn't literal, which is what makes it an idiom."},
-    {q:"Which pronoun form would you use here: \"This laptop is ___.\"", options:["mine","my","myself"], correctIndex:0, explain:"\"Mine\" is the possessive pronoun, used on its own without a following noun."}
+    {q:"What is the past participle (V3) of \"eat\"?", options:["eaten","ate","eating"], correctIndex:0, skill:"verb-form-V3", explain:"\"Ate\" is the simple past (V2); \"eaten\" is the past participle (V3), used with have/had."},
+    {q:"\"To have cold feet\" is an example of...", options:["an idiom","a phrase","a clause"], correctIndex:0, skill:"idiom-meaning", explain:"Its meaning (being nervous) isn't literal, which is what makes it an idiom."},
+    {q:"Which pronoun form would you use here: \"This laptop is ___.\"", options:["mine","my","myself"], correctIndex:0, skill:"pronoun-possessive", explain:"\"Mine\" is the possessive pronoun, used on its own without a following noun."}
   ]},
   { lessonIdx:2, questions:[
-    {q:"\"Does she have a job?\" is an example of using \"do\" to build a...", options:["question sentence","negative sentence","passive sentence"], correctIndex:0, explain:"The auxiliary sits before the subject to signal a question."},
-    {q:"Which modal expresses obligation or necessity?", options:["must","might","could"], correctIndex:0, explain:"\"Must\" signals obligation or a strong logical conclusion."},
-    {q:"\"The report is prepared by the staff\" uses \"to be\" to form the...", options:["passive voice","continuous tense","simple past"], correctIndex:0, explain:"Subject + to be + V3 is the passive voice formula."}
+    {q:"\"Does she have a job?\" is an example of using \"do\" to build a...", options:["question sentence","negative sentence","passive sentence"], correctIndex:0, skill:"auxiliary-question", explain:"The auxiliary sits before the subject to signal a question."},
+    {q:"Which modal expresses obligation or necessity?", options:["must","might","could"], correctIndex:0, skill:"modal-obligation", explain:"\"Must\" signals obligation or a strong logical conclusion."},
+    {q:"\"The report is prepared by the staff\" uses \"to be\" to form the...", options:["passive voice","continuous tense","simple past"], correctIndex:0, skill:"passive-voice", explain:"Subject + to be + V3 is the passive voice formula."}
   ]},
   { lessonIdx:3, questions:[
-    {q:"Complete: \"She ___ rice every day.\"", options:["eats","eat","is eating"], correctIndex:0, explain:"Third-person singular subjects add s/es in the Simple Present."},
-    {q:"Which signals a habitual action?", options:["usually","right now","yesterday"], correctIndex:0, explain:"\"Usually\" is a classic Simple Present time marker for repeated actions."},
-    {q:"To ask a question about \"they\" in the Simple Present, use...", options:["Do","Does","Did"], correctIndex:0, explain:"\"Do\" pairs with I/you/we/they."}
+    {q:"Complete: \"She ___ rice every day.\"", options:["eats","eat","is eating"], correctIndex:0, skill:"third-person-s", explain:"Third-person singular subjects add s/es in the Simple Present."},
+    {q:"Which signals a habitual action?", options:["usually","right now","yesterday"], correctIndex:0, skill:"simple-present-marker", explain:"\"Usually\" is a classic Simple Present time marker for repeated actions."},
+    {q:"To ask a question about \"they\" in the Simple Present, use...", options:["Do","Does","Did"], correctIndex:0, skill:"do-does-question", explain:"\"Do\" pairs with I/you/we/they."}
   ]},
   { lessonIdx:4, questions:[
-    {q:"Complete: \"Right now, she ___ dinner.\"", options:["is cooking","cooks","cooked"], correctIndex:0, explain:"\"Right now\" signals an action in progress, which needs the Present Continuous."},
-    {q:"\"We are meeting the manager tomorrow\" describes a...", options:["future arrangement","past habit","permanent fact"], correctIndex:0, explain:"The Present Continuous can describe a scheduled future plan."},
-    {q:"The Present Continuous formula is Subject + ___ + V-ing.", options:["to be (am/is/are)","to do","to have"], correctIndex:0, explain:"\"To be\" is the auxiliary that builds every continuous tense."}
+    {q:"Complete: \"Right now, she ___ dinner.\"", options:["is cooking","cooks","cooked"], correctIndex:0, skill:"continuous-now", explain:"\"Right now\" signals an action in progress, which needs the Present Continuous."},
+    {q:"\"We are meeting the manager tomorrow\" describes a...", options:["future arrangement","past habit","permanent fact"], correctIndex:0, skill:"future-arrangement", explain:"The Present Continuous can describe a scheduled future plan."},
+    {q:"The Present Continuous formula is Subject + ___ + V-ing.", options:["to be (am/is/are)","to do","to have"], correctIndex:0, skill:"continuous-formula", explain:"\"To be\" is the auxiliary that builds every continuous tense."}
   ]},
   { lessonIdx:5, questions:[
-    {q:"Complete: \"She ___ a bookstore.\" (possession, right now)", options:["owns","is owning","owned"], correctIndex:0, explain:"Possession verbs like \"own\" stay in the Simple Present even for a current state."},
-    {q:"\"I think you're right\" uses \"think\" to mean...", options:["an opinion","a mental process","a possession"], correctIndex:0, explain:"When \"think\" expresses an opinion, it's non-progressive."},
-    {q:"Which of these is typically non-progressive?", options:["believe","run","build"], correctIndex:0, explain:"\"Believe\" describes a mental state, not an action in progress."}
+    {q:"Complete: \"She ___ a bookstore.\" (possession, right now)", options:["owns","is owning","owned"], correctIndex:0, skill:"possession-simple", explain:"Possession verbs like \"own\" stay in the Simple Present even for a current state."},
+    {q:"\"I think you're right\" uses \"think\" to mean...", options:["an opinion","a mental process","a possession"], correctIndex:0, skill:"think-opinion", explain:"When \"think\" expresses an opinion, it's non-progressive."},
+    {q:"Which of these is typically non-progressive?", options:["believe","run","build"], correctIndex:0, skill:"non-progressive-identify", explain:"\"Believe\" describes a mental state, not an action in progress."}
   ]},
   { lessonIdx:6, questions:[
-    {q:"Complete: \"She ___ about the incident last week.\"", options:["heard","hears","is hearing"], correctIndex:0, explain:"\"Last week\" is a finished-past marker, so it takes the Simple Past (V2)."},
-    {q:"Which auxiliary builds Simple Past questions/negatives for every subject?", options:["did/didn't","do/don't","does/doesn't"], correctIndex:0, explain:"\"Did\" works the same way regardless of subject in the Simple Past."},
-    {q:"\"... ago\" is a marker that...", options:["counts backward from now","points to right now","points to the future"], correctIndex:0, explain:"\"Two days ago\" measures backward from the present moment."}
+    {q:"Complete: \"She ___ about the incident last week.\"", options:["heard","hears","is hearing"], correctIndex:0, skill:"simple-past-marker", explain:"\"Last week\" is a finished-past marker, so it takes the Simple Past (V2)."},
+    {q:"Which auxiliary builds Simple Past questions/negatives for every subject?", options:["did/didn't","do/don't","does/doesn't"], correctIndex:0, skill:"did-auxiliary", explain:"\"Did\" works the same way regardless of subject in the Simple Past."},
+    {q:"\"... ago\" is a marker that...", options:["counts backward from now","points to right now","points to the future"], correctIndex:0, skill:"ago-marker", explain:"\"Two days ago\" measures backward from the present moment."}
   ]},
   { lessonIdx:7, questions:[
-    {q:"Complete: \"I ___ TV when the phone rang.\"", options:["was watching","watched","watch"], correctIndex:0, explain:"The ongoing background action takes the Past Continuous; the interruption takes the Simple Past."},
-    {q:"Complete: \"___ they playing football in the rain?\"", options:["Were","Was","Did"], correctIndex:0, explain:"\"They\" is plural, so the question uses \"Were.\""},
-    {q:"The Past Continuous is most associated with...", options:["an interrupted action","a finished single event","a future plan"], correctIndex:0, explain:"Its signature use is setting a scene that a shorter Simple-Past action interrupts."}
+    {q:"Complete: \"I ___ TV when the phone rang.\"", options:["was watching","watched","watch"], correctIndex:0, skill:"past-continuous-interrupt", explain:"The ongoing background action takes the Past Continuous; the interruption takes the Simple Past."},
+    {q:"Complete: \"___ they playing football in the rain?\"", options:["Were","Was","Did"], correctIndex:0, skill:"was-were-agreement", explain:"\"They\" is plural, so the question uses \"Were.\""},
+    {q:"The Past Continuous is most associated with...", options:["an interrupted action","a finished single event","a future plan"], correctIndex:0, skill:"interrupted-action", explain:"Its signature use is setting a scene that a shorter Simple-Past action interrupts."}
   ]},
   { lessonIdx:8, questions:[
-    {q:"Complete: \"He ___ for Bank Indonesia for 20 years.\"", options:["has worked","worked","was working"], correctIndex:0, explain:"\"For 20 years\" spans into the present, which calls for the Present Perfect."},
-    {q:"Which time word pairs with the Present Perfect to mean \"at any point in life\"?", options:["ever/never","yesterday","last week"], correctIndex:0, explain:"\"Ever/never\" frames a question or statement about lifetime experience."},
-    {q:"Complete: \"___ you ever traveled to Japan?\"", options:["Have","Has","Did"], correctIndex:0, explain:"\"You\" pairs with \"have,\" not \"has.\""}
+    {q:"Complete: \"He ___ for Bank Indonesia for 20 years.\"", options:["has worked","worked","was working"], correctIndex:0, skill:"present-perfect-duration", explain:"\"For 20 years\" spans into the present, which calls for the Present Perfect."},
+    {q:"Which time word pairs with the Present Perfect to mean \"at any point in life\"?", options:["ever/never","yesterday","last week"], correctIndex:0, skill:"ever-never", explain:"\"Ever/never\" frames a question or statement about lifetime experience."},
+    {q:"Complete: \"___ you ever traveled to Japan?\"", options:["Have","Has","Did"], correctIndex:0, skill:"have-has-agreement", explain:"\"You\" pairs with \"have,\" not \"has.\""}
   ]},
   { lessonIdx:9, questions:[
-    {q:"Complete: \"I ___ in Jakarta for 10 years.\"", options:["have been living","live","lived"], correctIndex:0, explain:"\"For 10 years\" signals ongoing duration, which calls for the Present Perfect Continuous."},
-    {q:"\"He's tired because he has been working all day\" highlights...", options:["a recent action with a visible present result","a habit","a future plan"], correctIndex:0, explain:"The tiredness now is the visible result of a recently continuous action."},
-    {q:"The core signal of the Present Perfect Continuous is...", options:["been + V-ing","V-ing alone","have + V3"], correctIndex:0, explain:"\"Have/has + been + V-ing\" is the full formula; \"been + V-ing\" is the part that marks it as continuous."}
+    {q:"Complete: \"I ___ in Jakarta for 10 years.\"", options:["have been living","live","lived"], correctIndex:0, skill:"perfect-continuous-duration", explain:"\"For 10 years\" signals ongoing duration, which calls for the Present Perfect Continuous."},
+    {q:"\"He's tired because he has been working all day\" highlights...", options:["a recent action with a visible present result","a habit","a future plan"], correctIndex:0, skill:"visible-result", explain:"The tiredness now is the visible result of a recently continuous action."},
+    {q:"The core signal of the Present Perfect Continuous is...", options:["been + V-ing","V-ing alone","have + V3"], correctIndex:0, skill:"been-v-ing-signal", explain:"\"Have/has + been + V-ing\" is the full formula; \"been + V-ing\" is the part that marks it as continuous."}
   ]},
   { lessonIdx:10, questions:[
-    {q:"Complete: \"By the time I arrived, the train ___.\"", options:["had already left","already left","was leaving"], correctIndex:0, explain:"The train's departure happened before I arrived — the earlier event takes the Past Perfect."},
-    {q:"Which auxiliary does the Past Perfect use for every subject?", options:["had","have/has","did"], correctIndex:0, explain:"\"Had\" never changes with the subject — that's what makes the Past Perfect simple to form."},
-    {q:"\"After she had finished her homework, she watched a movie\" — which action happened first?", options:["finishing homework","watching the movie","neither, they were simultaneous"], correctIndex:0, explain:"The Past Perfect (had finished) always marks the earlier of the two past actions."}
+    {q:"Complete: \"By the time I arrived, the train ___.\"", options:["had already left","already left","was leaving"], correctIndex:0, skill:"past-perfect-earlier", explain:"The train's departure happened before I arrived — the earlier event takes the Past Perfect."},
+    {q:"Which auxiliary does the Past Perfect use for every subject?", options:["had","have/has","did"], correctIndex:0, skill:"had-auxiliary", explain:"\"Had\" never changes with the subject — that's what makes the Past Perfect simple to form."},
+    {q:"\"After she had finished her homework, she watched a movie\" — which action happened first?", options:["finishing homework","watching the movie","neither, they were simultaneous"], correctIndex:0, skill:"sequencing", explain:"The Past Perfect (had finished) always marks the earlier of the two past actions."}
   ]}
 ];
 
