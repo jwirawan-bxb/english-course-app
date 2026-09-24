@@ -108,6 +108,8 @@
   .progress-dots{display:flex;gap:6px;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);}
   .progress-dots span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);display:inline-block;}
   .progress-dots span.done{background:#fff;}
+  .progress-wrap{display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;min-height:20px;}
+  .progress-caption{font-size:10.5px;letter-spacing:.06em;font-weight:700;color:#fff;text-transform:uppercase;margin-top:16px;}
   .header-right{text-align:right;font-size:13px;}
   .header-right .lesson-of{font-size:11px;color:rgba(255,255,255,.8);}
 
@@ -210,6 +212,7 @@
   .carousel-choice-btn{border:1px solid var(--line);background:#fff;color:#333;padding:11px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;}
   .carousel-choice-btn:hover{border-color:var(--pink);}
   .carousel-choice-btn.picked-correct{background:var(--teal-correct);color:var(--green-correct-text);border-color:var(--teal-correct);font-weight:700;}
+  .carousel-choice-btn.picked-wrong{background:#7a2230;color:#ffb3bd;border-color:#7a2230;font-weight:700;}
   .carousel-choice-btn.dim{color:#bbb;cursor:default;}
   .carousel-next-hint{font-size:11px;opacity:.85;margin-top:8px;}
 
@@ -370,7 +373,7 @@
 </head>
 <body>
 
-<button class="sound-toggle" id="soundToggleBtn" onclick="toggleSound()" title="Toggle click sounds">🔊</button>
+<button class="sound-toggle" id="soundToggleBtn" onclick="toggleSound()" title="Toggle click sounds" aria-label="Sound on/off" aria-pressed="true">🔊</button>
 <div class="stage" id="stage"></div>
 
 <script>
@@ -1468,7 +1471,7 @@ const PRONUNCIATION_PHRASES = [
 ];
 
 const MILESTONES = [
-  { id:'m1', afterLesson:2, title:"Milestone 1: Communication Foundations Exam", passScore:4, suggestedDays:5,
+  { id:'m1', afterLesson:3, title:"Milestone 1: Communication Foundations Exam", passScore:4, suggestedDays:5,
     questions:[
       {q:"Which title is the safest default for any woman in a professional context?", options:["Ms.","Mrs.","Madam"], correctIndex:0, explain:"Ms. works regardless of marital status, which makes it the safest professional default."},
       {q:"The past participle (V3) of \"swim\" is...", options:["swum","swam","swimming"], correctIndex:0, explain:"\"Swam\" is the simple past (V2); \"swum\" is the past participle (V3), used with have/had."},
@@ -1476,7 +1479,7 @@ const MILESTONES = [
       {q:"Which is an idiom, not just a phrase?", options:["to have cold feet","a beautiful woman","a handsome man"], correctIndex:0, explain:"\"To have cold feet\" means being nervous — a meaning you can't guess from the individual words, which makes it an idiom."},
       {q:"Which modal expresses a slight possibility?", options:["might","must","should"], correctIndex:0, explain:"\"Might\" signals a slight possibility, while \"must\" signals obligation and \"should\" signals advice."}
     ]},
-  { id:'m2', afterLesson:5, title:"Milestone 2: Present & Continuous Tenses Exam", passScore:4, suggestedDays:12,
+  { id:'m2', afterLesson:6, title:"Milestone 2: Present & Continuous Tenses Exam", passScore:4, suggestedDays:12,
     questions:[
       {q:"Complete: \"He/She/It ___ rice every day.\"", options:["eats","eat","is eating"], correctIndex:0, explain:"Third-person singular subjects (he/she/it) add s/es to the base verb in the Simple Present."},
       {q:"Complete: \"Right now, she ___ dinner.\"", options:["is cooking","cooks","cooked"], correctIndex:0, explain:"\"Right now\" signals an action in progress at this exact moment — the Present Continuous."},
@@ -1484,7 +1487,7 @@ const MILESTONES = [
       {q:"\"We are meeting the manager tomorrow\" is an example of the Present Continuous used for a...", options:["future arrangement","past habit","permanent fact"], correctIndex:0, explain:"The Present Continuous can describe a scheduled future plan, signaled here by \"tomorrow.\""},
       {q:"Which verb is typically non-progressive?", options:["believe","run","cook"], correctIndex:0, explain:"\"Believe\" describes a mental state rather than an action in progress, so it stays in the Simple Present."}
     ]},
-  { id:'m3', afterLesson:8, title:"Milestone 3: Past & Perfect Tenses Exam", passScore:4, suggestedDays:20,
+  { id:'m3', afterLesson:9, title:"Milestone 3: Past & Perfect Tenses Exam", passScore:4, suggestedDays:20,
     questions:[
       {q:"Complete: \"She ___ about the incident last week.\"", options:["heard","hears","is hearing"], correctIndex:0, explain:"\"Last week\" is a completed-past time marker, which calls for the Simple Past."},
       {q:"Complete: \"I ___ TV when the phone rang.\"", options:["was watching","watched","watch"], correctIndex:0, explain:"The ongoing background action (watching TV) takes the Past Continuous; the interruption (rang) takes the Simple Past."},
@@ -1566,7 +1569,10 @@ function toggleSound(){
   state.soundOn = !state.soundOn;
   saveProgress();
   const btn = document.getElementById('soundToggleBtn');
-  if(btn) btn.textContent = state.soundOn ? '🔊' : '🔇';
+  if(btn){
+    btn.textContent = state.soundOn ? '🔊' : '🔇';
+    btn.setAttribute('aria-pressed', state.soundOn ? 'true' : 'false');
+  }
   if(state.soundOn) playClickSound();
 }
 // Global click-sound delegation: fires for every clickable element in the app
@@ -1578,7 +1584,10 @@ document.addEventListener('click', function(e){
 }, true);
 (function initSoundIcon(){
   const btn = document.getElementById('soundToggleBtn');
-  if(btn) btn.textContent = state.soundOn ? '🔊' : '🔇';
+  if(btn){
+    btn.textContent = state.soundOn ? '🔊' : '🔇';
+    btn.setAttribute('aria-pressed', state.soundOn ? 'true' : 'false');
+  }
 })();
 
 function navClick(name){
@@ -1589,9 +1598,11 @@ function navClick(name){
   }
   state.navToast = name;
   renderCourse();
+  trapModalFocus('.toast-card', closeNavToast);
 }
 function closeNavToast(){
   state.navToast = null;
+  releaseModalFocus('.toast-card');
   renderCourse();
 }
 function toggleBookmark(){
@@ -1601,16 +1612,18 @@ function toggleBookmark(){
 function openCourseSummaries(){
   state.showSummaries = true;
   renderCourse();
+  trapModalFocus('.summaries-card', closeCourseSummaries);
 }
 function closeCourseSummaries(){
   state.showSummaries = false;
+  releaseModalFocus('.summaries-card');
   renderCourse();
 }
 function navToastHtml(){
   if(!state.navToast) return '';
   return `
   <div class="toast-overlay" onclick="if(event.target===this) closeNavToast()">
-    <div class="toast-card">
+    <div class="toast-card" role="dialog" aria-modal="true" aria-label="${state.navToast}">
       <span class="sc-close" onclick="closeNavToast()">✕</span>
       <div class="toast-icon">🚧</div>
       <h3>${state.navToast}</h3>
@@ -1635,7 +1648,7 @@ function courseSummariesModalHtml(){
   if(!state.showSummaries) return '';
   return `
   <div class="toast-overlay" onclick="if(event.target===this) closeCourseSummaries()">
-    <div class="summaries-card">
+    <div class="summaries-card" role="dialog" aria-modal="true" aria-label="Resources">
       <span class="sc-close" onclick="closeCourseSummaries()">✕</span>
       <div class="res-header"><h3>Resources</h3></div>
       <div class="summaries-body">
@@ -1904,7 +1917,7 @@ function quizBodyHtml(quiz, onPassCb, onRetryCb, exitLabel){
           else if(i === picked) cls = 'picked-wrong';
           else cls = 'dim';
         }
-        return `<div class="option-item ${cls}" onclick="pickQuizAnswer(${i})"><b>${quizOptionLabel(i)}.</b> ${opt}</div>`;
+        return `<div class="option-item ${cls}" role="button" tabindex="0" onclick="pickQuizAnswer(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pickQuizAnswer(${i});}"><b>${quizOptionLabel(i)}.</b> ${opt}</div>`;
       }).join('')}
     </div>
     ${picked !== null ? `
@@ -2056,12 +2069,14 @@ function openPronunciation(){
   pronunState.errorMsg = null;
   cleanupRawRecording();
   renderLessonScreen();
+  trapModalFocus('.pronun-card', closePronunciation);
 }
 function closePronunciation(){
   pronunState.open = false;
   if(pronunState.recognizer){ try{ pronunState.recognizer.stop(); }catch(e){} }
   pronunState.recognizing = false;
   cleanupRawRecording();
+  releaseModalFocus('.pronun-card');
   renderLessonScreen();
 }
 function pronunNav(dir){
@@ -2313,6 +2328,40 @@ function playRawRecording(){
 
 /* --- security: escape user-typed text before inserting into innerHTML, to
    prevent XSS via the Hint Helper chat input or the certificate name field --- */
+/* --- accessibility: simple focus trap + Escape-to-close for modal overlays.
+   Call trapModalFocus(dialogSelector, closeFn) right after a modal renders
+   (dialogSelector targets the dialog card itself, e.g. '.support-card'),
+   and releaseModalFocus(dialogSelector) right before/while it closes. --- */
+let _modalReturnFocusEl = null;
+function trapModalFocus(dialogSelector, closeFn){
+  const dialog = document.querySelector(dialogSelector);
+  if(!dialog) return;
+  const overlay = dialog.parentElement || dialog;
+  _modalReturnFocusEl = document.activeElement;
+  if(!dialog.hasAttribute('tabindex')) dialog.setAttribute('tabindex','-1');
+  dialog.focus();
+  const onKeydown = function(e){
+    if(e.key === 'Escape'){ e.preventDefault(); closeFn(); return; }
+    if(e.key === 'Tab'){
+      const focusables = overlay.querySelectorAll('button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      if(!focusables.length) return;
+      const first = focusables[0], last = focusables[focusables.length-1];
+      if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+      else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+    }
+  };
+  overlay._a11yKeydown = onKeydown;
+  document.addEventListener('keydown', onKeydown, true);
+}
+function releaseModalFocus(dialogSelector){
+  const dialog = document.querySelector(dialogSelector);
+  const overlay = dialog ? (dialog.parentElement || dialog) : null;
+  if(overlay && overlay._a11yKeydown){ document.removeEventListener('keydown', overlay._a11yKeydown, true); }
+  if(_modalReturnFocusEl && typeof _modalReturnFocusEl.focus === 'function'){
+    try{ _modalReturnFocusEl.focus(); }catch(e){}
+  }
+  _modalReturnFocusEl = null;
+}
 function escapeHtml(str){
   return String(str)
     .replace(/&/g, '&amp;')
@@ -2388,7 +2437,7 @@ function pronunciationModalHtml(){
   const useRawFallback = envIssue && pronunState.rawSupported;
   return `
   <div class="toast-overlay" onclick="if(event.target===this) closePronunciation()">
-    <div class="pronun-card">
+    <div class="pronun-card" role="dialog" aria-modal="true" aria-label="Pronunciation Practice">
       <span class="sc-close" onclick="closePronunciation()">✕</span>
       <div class="pronun-icon">🗣️</div>
       <h3>Pronunciation Practice</h3>
@@ -2433,7 +2482,7 @@ function pronunciationModalHtml(){
       ${pronunState.errorMsg ? `<div class="voice-error">⚠️ ${pronunState.errorMsg}</div>` : ''}
 
       <div class="voice-fallback-note">${canRecognize ? (useRawFallback ? 'Want an AI accuracy score too? Type what you said:' : 'You can also type or edit what you said:') : "Your browser doesn't support speech recognition here, so type what you said instead:"}</div>
-      <input id="pronunTranscriptInput" type="text" placeholder="Type what you said..." value="${pronunState.transcript||''}" />
+      <input id="pronunTranscriptInput" type="text" placeholder="Type what you said..." value="${escapeHtml(pronunState.transcript||'')}" />
       <button class="btn-green" style="margin-top:14px;width:100%;" onclick="checkPronunciation()">AI Review My Pronunciation</button>
       ${r ? `
         <div class="pronun-result ${r.score>=85?'good':(r.score>=60?'ok':'low')}">
@@ -2448,7 +2497,13 @@ function pronunciationModalHtml(){
 
 function toggleSupport(){
   state.supportOpen = !state.supportOpen;
-  renderCurrentTutorHost();
+  if(state.supportOpen){
+    renderCurrentTutorHost();
+    trapModalFocus('.support-card', toggleSupport);
+  } else {
+    releaseModalFocus('.support-card');
+    renderCurrentTutorHost();
+  }
 }
 
 function stripTags(html){
@@ -2529,7 +2584,7 @@ function supportModalHtml(){
   if(!state.supportOpen) return '';
   return `
   <div class="support-overlay" onclick="if(event.target===this) toggleSupport()">
-    <div class="support-card">
+    <div class="support-card" role="dialog" aria-modal="true" aria-label="About This Slide">
       <span class="sc-close" onclick="toggleSupport()">✕</span>
       <h3>About This Slide</h3>
       <p>${getSlideExplanation()}</p>
@@ -2613,7 +2668,7 @@ function renderCourse(){
     </div>` : ''}
     <div class="course-wrap">
       <div class="course-main">
-        <div class="course-icon"></div>
+        <div class="course-icon" aria-hidden="true"></div>
         <h1 class="course-title">ENGLISH COMMUNICATION<br>&amp; GRAMMAR MASTERY</h1>
         <div class="eyebrow">COURSE DESCRIPTION</div>
         <p class="course-desc">Build a complete foundation in spoken and written English — from polite titles and interjections, through core grammar terminology and auxiliaries, to confident, accurate use of the Simple Present, Present Continuous, Non-Progressive Verbs, Simple Past, Past Continuous, Present Perfect, Present Perfect Continuous, and Past Perfect tenses.</p>
@@ -2812,6 +2867,17 @@ function resetLessonProgress(lessonIdx){
   state.masteryPassed[lessonIdx] = false;
   state.done.delete(lessonIdx);
   state.quiz = null;
+  carouselState = { forKey:null, idx:0, answers:[], wrongPick:[] };
+  matchPairsState = { forKey:null, rightOrder:[], selectedLeft:null, matched:[], wrongFlash:null };
+  if(speakBlankState.recognizer){ try{ speakBlankState.recognizer.stop(); }catch(e){} }
+  if(speakBlankState.rawStream){ try{ speakBlankState.rawStream.getTracks().forEach(t=>t.stop()); }catch(e){} }
+  if(speakBlankState.rawUrl){ try{ URL.revokeObjectURL(speakBlankState.rawUrl); }catch(e){} }
+  speakBlankState = {
+    forKey:null, recognizing:false, requesting:false, recognizer:null,
+    rawSupported: speakBlankState.rawSupported,
+    rawStream:null, rawRecorder:null, rawChunks:[], rawUrl:null, rawRecording:false, rawRequesting:false, rawError:null,
+    transcript:'', errorMsg:null, showOptions:false, lastResult:null
+  };
   saveProgress();
   state.lessonIdx = lessonIdx;
   state.screenIdx = 0;
@@ -2832,7 +2898,7 @@ function renderSelectAllScreen(screen){
       <div class="select-all-label">SELECT ALL ANSWERS</div>
       <div class="answer-list">
         ${screen.items.map((it,i)=>`
-          <div class="answer-item ${st.sel.has(i)?'selected':''}" onclick="toggleSelectItem(${i})">
+          <div class="answer-item ${st.sel.has(i)?'selected':''}" role="button" tabindex="0" onclick="toggleSelectItem(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleSelectItem(${i});}">
             ${it.label}<span class="chk"></span>
           </div>`).join('')}
       </div>
@@ -3096,7 +3162,7 @@ function renderFillBlankScreen(screen){
           ` : ''}
           ${speakBlankState.errorMsg ? `<div class="voice-error">⚠️ ${speakBlankState.errorMsg}</div>` : ''}
           <div class="voice-fallback-note">${canRecognize ? 'You can also type or edit what you said:' : "Your browser doesn't support speech recognition here, so type what you said:"}</div>
-          <input id="speakBlankInput" type="text" placeholder="Type the full sentence you said..." value="${speakBlankState.transcript||''}" />
+          <input id="speakBlankInput" type="text" placeholder="Type the full sentence you said..." value="${escapeHtml(speakBlankState.transcript||'')}" />
           <button class="btn-green" style="margin-top:12px;width:100%;" onclick="submitSpokenFillBlank()">Check My Answer</button>
           ${r ? `
             <div class="pronun-result ${r.keyGood?'good':(r.keyClose?'ok':'low')}" style="margin-top:14px;">
@@ -3108,7 +3174,7 @@ function renderFillBlankScreen(screen){
           ${speakBlankState.showOptions ? `
             <div class="option-list">
               ${screen.options.map((t,i)=>`
-                <div class="option-item ${lastWrong===i?'picked-wrong':''}" onclick="pickFillBlank(${i}, ${screen.correctIndex})">${t}</div>
+                <div class="option-item ${lastWrong===i?'picked-wrong':''}" role="button" tabindex="0" onclick="pickFillBlank(${i}, ${screen.correctIndex})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pickFillBlank(${i}, ${screen.correctIndex});}">${t}</div>
               `).join('')}
             </div>
           ` : ''}
@@ -3189,7 +3255,7 @@ function renderQuickCheckScreen(screen){
             else if(i === picked) cls = 'picked-wrong';
             else cls = 'dim';
           }
-          return `<div class="option-item ${cls}" onclick="pickQuickCheck(${i}, ${screen.correctIndex})">${opt}</div>`;
+          return `<div class="option-item ${cls}" role="button" tabindex="0" onclick="pickQuickCheck(${i}, ${screen.correctIndex})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();pickQuickCheck(${i}, ${screen.correctIndex});}">${opt}</div>`;
         }).join('')}
       </div>
       <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
@@ -3213,10 +3279,10 @@ function pickQuickCheck(i, correctIndex){
 }
 
 /* ============ CAROUSEL CLASSIFY (multi-card classification carousel) ============ */
-let carouselState = { forKey:null, idx:0, answers:[] };
+let carouselState = { forKey:null, idx:0, answers:[], wrongPick:[] };
 function ensureCarouselState(screen, k){
   if(carouselState.forKey !== k){
-    carouselState = { forKey:k, idx:0, answers:new Array(screen.cards.length).fill(null) };
+    carouselState = { forKey:k, idx:0, answers:new Array(screen.cards.length).fill(null), wrongPick:new Array(screen.cards.length).fill(null) };
   }
 }
 function carouselNav(dir){
@@ -3230,7 +3296,9 @@ function pickCarouselAnswer(btnIdx){
   if(carouselState.answers[carouselState.idx] !== null) return;
   const subKey = key()+'C'+carouselState.idx;
   if(btnIdx !== c.correctIndex){
+    carouselState.wrongPick[carouselState.idx] = btnIdx; // show wrong-state feedback before recording
     recordExerciseResult(subKey, false); // first wrong click locks this card's score as incorrect
+    renderLessonScreen();
     return;
   }
   carouselState.answers[carouselState.idx] = btnIdx;
@@ -3247,6 +3315,7 @@ function renderCarouselClassifyScreen(screen){
   const idx = carouselState.idx;
   const c = screen.cards[idx];
   const answered = carouselState.answers[idx];
+  const wrongPick = carouselState.wrongPick[idx];
   const allDone = carouselState.answers.every(a=>a!==null);
   const inner = `
     ${playerHeader()}
@@ -3267,11 +3336,18 @@ function renderCarouselClassifyScreen(screen){
           if(answered!==null){
             if(i===c.correctIndex) cls='picked-correct';
             else cls='dim';
+          } else if(wrongPick!==null && i===wrongPick){
+            cls='picked-wrong';
           }
-          return `<button class="carousel-choice-btn ${cls}" onclick="pickCarouselAnswer(${i})">${b}</button>`;
+          return `<button class="carousel-choice-btn ${cls}" onclick="pickCarouselAnswer(${i})">${i===wrongPick && answered===null ? '✗ ' : ''}${b}</button>`;
         }).join('')}
       </div>
       <div class="ai-tutor-btn" onclick="toggleAiTutor()"><small>💡 HINT</small>Explain This Screen</div>
+      ${wrongPick!==null && answered===null ? `
+      <div class="tutor-callout" style="background:#7a2230;color:#ffb3bd;">
+        <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
+        ✗ Not quite — that's not the right classification for this card.
+      </div>` : ''}
       ${answered!==null ? `
       <div class="tutor-callout green">
         <span class="tc-close" onclick="this.parentElement.style.display='none'">✕</span>
@@ -3349,13 +3425,13 @@ function renderMatchPairsScreen(screen){
           ${screen.pairs.map((p,i)=>{
             const isMatched = matchPairsState.matched.includes(i);
             const isSelected = matchPairsState.selectedLeft === i;
-            return `<div class="match-cell ${isMatched?'matched':''} ${isSelected?'selected':''}" onclick="clickMatchLeft(${i})">${p.left}</div>`;
+            return `<div class="match-cell ${isMatched?'matched':''} ${isSelected?'selected':''}" role="button" tabindex="0" onclick="clickMatchLeft(${i})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickMatchLeft(${i});}">${p.left}</div>`;
           }).join('')}
         </div>
         <div class="match-col">
           ${matchPairsState.rightOrder.map((rt,ri)=>{
             const isMatched = matchPairsState.matched.some(li=>screen.pairs[li].right===rt);
-            return `<div class="match-cell ${isMatched?'matched':''}" onclick="clickMatchRight(${ri})">${rt}</div>`;
+            return `<div class="match-cell ${isMatched?'matched':''}" role="button" tabindex="0" onclick="clickMatchRight(${ri})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();clickMatchRight(${ri});}">${rt}</div>`;
           }).join('')}
         </div>
       </div>
@@ -3442,7 +3518,7 @@ function renderCertificateScreen(){
     </div>
     <div class="cert-controls no-print">
       <label class="cert-name-label">Your name (for the certificate):</label>
-      <input id="certNameInput" type="text" placeholder="Enter your full name" value="${nameVal.replace(/"/g,'&quot;')}" oninput="updateCertName(this.value)" />
+      <input id="certNameInput" type="text" placeholder="Enter your full name" value="${escapeHtml(nameVal)}" oninput="updateCertName(this.value)" />
       <button class="btn-green cert-download-btn" onclick="downloadCertificatePdf()">⬇ Download as PDF</button>
       <div class="cert-hint">This opens your browser's print dialog — choose <b>"Save as PDF"</b> as the destination (instead of a physical printer) to download it.</div>
     </div>
