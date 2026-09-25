@@ -36,6 +36,8 @@
   .app-nav .links span:hover{color:#fff;}
   .app-nav .links span.active{color:var(--brand-green);border-bottom-color:var(--brand-green);font-weight:800;}
   .app-nav .right{display:flex;align-items:center;gap:14px;}
+  .sign-out-link{color:rgba(255,255,255,.7);font-size:11.5px;font-weight:600;cursor:pointer;text-decoration:none;}
+  .sign-out-link:hover{color:#fff;text-decoration:underline;}
   .theme-toggle{cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.4);color:#fff;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-size:14px;}
   .theme-toggle:hover{border-color:#fff;}
   .btn-outline{cursor:pointer;transition:.15s;}
@@ -2674,7 +2676,8 @@ function renderCourse(){
       </div>
       <div class="right">
         <span class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">${document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙'}</span>
-        <div class="avatar">J</div>
+        <span class="sign-out-link" onclick="location.href='/.auth/logout'" title="Sign out">Sign out</span>
+        <div class="avatar" title="${currentUser.name}">${currentUser.initial}</div>
       </div>
     </div>
     ${statsBarHtml()}
@@ -3578,7 +3581,19 @@ function toggleTheme(){
   applyTheme(mode);
 })();
 
-renderCourse();
+let currentUser = { name: 'Guest', initial: 'G' };
+async function loadUser(){
+  try{
+    const res = await fetch('/.auth/me');
+    const data = await res.json();
+    const principal = data && data.clientPrincipal;
+    if(principal && principal.userDetails){
+      currentUser = { name: principal.userDetails, initial: principal.userDetails.trim().charAt(0).toUpperCase() };
+    }
+  }catch(e){ /* not running behind Azure Static Web Apps auth (e.g. local file preview) */ }
+  renderCourse();
+}
+loadUser();
 </script>
 </body>
 </html>
