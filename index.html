@@ -54,6 +54,9 @@
   .res-header{padding:20px 24px 16px;text-align:center;border-bottom:1px solid var(--line);}
   .res-header h3{margin:0;color:var(--ink);font-size:19px;font-weight:700;font-family:Georgia,'Times New Roman',serif;}
   .summaries-body{padding:20px 24px 24px;}
+  .privacy-body p{font-size:12.5px;line-height:1.6;color:var(--ink);margin:0 0 12px;}
+  .privacy-body ul{margin:0 0 12px;padding-left:18px;font-size:12.5px;line-height:1.6;color:var(--ink);}
+  .privacy-body a{word-break:break-all;}
   .summaries-body h4{margin:0 0 16px;font-size:17px;font-weight:800;color:var(--ink);}
   .pdf-list{display:flex;flex-direction:column;gap:16px;}
   .pdf-item{display:flex;align-items:center;gap:14px;cursor:pointer;padding:6px;border-radius:8px;transition:background .15s;}
@@ -1533,7 +1536,7 @@ const MILESTONES = [
     ]}
 ];
 
-const state = { view:"course", lessonIdx:0, screenIdx:0, done:new Set(), answers:{}, supportOpen:false, tutor:{open:false, msgs:{}}, navToast:null, bookmarked:false, showSummaries:false,
+const state = { view:"course", lessonIdx:0, screenIdx:0, done:new Set(), answers:{}, supportOpen:false, tutor:{open:false, msgs:{}}, navToast:null, bookmarked:false, showSummaries:false, showPrivacy:false,
   xp:0, streak:0, lastVisit:null, firstVisit:null, masteryPassed:{}, milestonesPassed:{}, masteryState:{}, milestoneState:{}, wrongAttempts:{}, soundOn:true, certificateName:'', exerciseScore:{} };
 initProgressAndStreak();
 
@@ -1633,6 +1636,16 @@ function closeCourseSummaries(){
   releaseModalFocus('.summaries-card');
   renderCourse();
 }
+function openPrivacyModal(){
+  state.showPrivacy = true;
+  renderCourse();
+  trapModalFocus('.privacy-card', closePrivacyModal);
+}
+function closePrivacyModal(){
+  state.showPrivacy = false;
+  releaseModalFocus('.privacy-card');
+  renderCourse();
+}
 function navToastHtml(){
   if(!state.navToast) return '';
   return `
@@ -1677,6 +1690,26 @@ function courseSummariesModalHtml(){
               </div>
             </div>`).join('')}
         </div>
+      </div>
+    </div>
+  </div>`;
+}
+function privacyModalHtml(){
+  if(!state.showPrivacy) return '';
+  return `
+  <div class="toast-overlay" onclick="if(event.target===this) closePrivacyModal()">
+    <div class="summaries-card privacy-card" role="dialog" aria-modal="true" aria-label="Consent">
+      <span class="sc-close" onclick="closePrivacyModal()">✕</span>
+      <div class="res-header"><h3>Consent</h3></div>
+      <div class="summaries-body privacy-body">
+        <p>When you grant consent to this application <b>purple-sky-0e55e000f.6.azurestaticapps.net</b>, the application will have access to:</p>
+        <ul>
+          <li>Your email address</li>
+          <li>Your username</li>
+        </ul>
+        <p>Note: Once you have provided this information, the owner of the application can decide how it is managed. If you'd like to revoke this information, please refer to the documentation for instructions.</p>
+        <p>When you log in to this site we store or retrieve information on your browser, in the form of a cookie(s). This information may be about you, your preferences, or your session and is mostly used to make the site perform and operate as you would expect it to do. This information does not directly identify you, but it can give you a more personalized web experience. Because we respect your rights to privacy, we only store this information during your login session and is deleted once you log out or leave this site.</p>
+        <p>To remove your data from Azure Static Web Apps, go to <a class="link-text" href="https://identity.azurestaticapps.net/.auth/purge/aad" target="_blank" rel="noopener">identity.azurestaticapps.net/.auth/purge/aad</a></p>
       </div>
     </div>
   </div>`;
@@ -2676,6 +2709,7 @@ function renderCourse(){
       </div>
       <div class="right">
         <span class="theme-toggle" onclick="toggleTheme()" title="Toggle dark mode">${document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙'}</span>
+        <span class="sign-out-link" onclick="openPrivacyModal()" title="Privacy & consent">Privacy</span>
         <span class="sign-out-link" onclick="location.href='/.auth/logout'" title="Sign out">Sign out</span>
         <div class="avatar" title="${currentUser.name}">${currentUser.initial}</div>
       </div>
@@ -2729,7 +2763,8 @@ function renderCourse(){
       </div>
     </div>
     ${navToastHtml()}
-    ${courseSummariesModalHtml()}`;
+    ${courseSummariesModalHtml()}
+    ${privacyModalHtml()}`;
 }
 function firstIncomplete(){
   for(let i=0;i<LESSONS.length;i++){ if(!state.done.has(i)) return i; }
