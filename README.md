@@ -36,6 +36,8 @@ index.html                    # The entire app: markup, styles, scripts, and cou
 staticwebapp.config.json      # Requires sign-in for every route; redirects 401s to Entra ID login
 .github/workflows/…yml        # GitHub Actions workflow that deploys to Azure Static Web Apps
 update.bat                    # Windows helper: commit all changes and push
+README.md / README.txt        # This file, in Markdown and plain-text form
+CLAUDE.md                     # Session/handover notes for AI assistants working on this repo
 ```
 
 ## Running locally
